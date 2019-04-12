@@ -3,9 +3,14 @@
 const applyCustomSplice = require('./arrayMethodSplice');
 applyCustomSplice();
 
-test('`splice2` is added to [].__proto__', () => {
+test('splice2 is added to [].__proto__', () => {
   expect([].splice2)
     .toBeInstanceOf(Function);
+});
+
+test(`splice2 doesn't call default splice`, () => {
+  expect([].splice2.toString().includes('.splice('))
+    .toBe(false);
 });
 
 test('splice without arguments', () => {
