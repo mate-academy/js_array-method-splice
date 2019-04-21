@@ -5,23 +5,23 @@
  */
 function applyCustomSplice() {
   [].__proto__.splice2 = function(start, deleteCount, ...items) {
-    const objectLength = this.length;
+    const initialLength = this.length;
     const argLength = items.length;
     let removedItems = [];
     let temp = [];
 
-    if (start < 0) start += objectLength;
-    if ((start * -1) > objectLength) {
+    if (start < 0) start += initialLength;
+    if (start * -1 > initialLength) {
       removedItems = [...this];
       this.length = 0;
       return removedItems;
     }
     if (start === 0) return this;
 
-    if (deleteCount > objectLength) deleteCount = 0;
-    if (deleteCount === 0 && (!items)) return removedItems;
+    if (deleteCount > initialLength) deleteCount = 0;
+    if (deleteCount === 0 && !items) return removedItems;
 
-    for (let i = objectLength; i > start; i--) {
+    for (let i = initialLength; i > start; i--) {
       removedItems.push(this.pop());
     }
 
