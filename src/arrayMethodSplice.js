@@ -14,16 +14,16 @@ function applyCustomSplice() {
     let realStart = start;
     let realCount = this.length - realStart;
 
-    if (!start) {
+    if (start === undefined) {
       return result;
     }
 
-    if (start < 0 && start >= (0 - this.length)) {
+    if (start < 0 && start >= (-this.length)) {
       realStart += this.length;
       realCount = this.length - realStart;
     }
 
-    if (start < (0 - this.length)) {
+    if (start < (-this.length)) {
       realStart = 0;
       realCount = this.length;
     }
@@ -61,5 +61,6 @@ function applyCustomSplice() {
     return result;
   };
 }
+applyCustomSplice();
 
 module.exports = applyCustomSplice;
