@@ -7,58 +7,54 @@ function applyCustomSplice() {
   [].__proto__.splice2 = function(start, deleteCount, ...items) {
     const deletedItems = [];
     let counter = 0;
-    let startIdx = start;
-    let delElCount = deleteCount;
+    let startIndex = start;
+    let delElementCount = deleteCount;
 
-    if (startIdx < 0 && (-this.length <= startIdx)) {
-      startIdx = this.length + startIdx;
+    if (startIndex < 0) {
+      startIndex += this.length;
     }
 
-    if (startIdx < 0 && (-this.length >= startIdx)) {
-      startIdx = 0;
+    if (startIndex < 0) {
+      startIndex = 0;
     }
 
-    if (delElCount === undefined) {
-      delElCount = this.length - startIdx;
+    if (delElementCount === undefined) {
+      delElementCount = this.length - startIndex;
     }
 
-    if (delElCount > 0) {
-      for (let delItemIndex = startIdx;
-        delItemIndex < delElCount + startIdx;
-        delItemIndex++) {
-        deletedItems[counter] = this[delItemIndex];
-        if (this[delItemIndex + delElCount] !== undefined) {
-          this[delItemIndex] = this[delItemIndex + delElCount];
-        }
-        counter++;
+    for (
+      let delItemIndex = startIndex;
+      delItemIndex < delElementCount + startIndex;
+      delItemIndex++
+    ) {
+      deletedItems[counter] = this[delItemIndex];
+      counter++;
+    }
+
+    if (startIndex + delElementCount < this.length) {
+      for (let i = 0; i < this.length - (delElementCount + startIndex); i++) {
+        this[startIndex + i] = this[startIndex + delElementCount + i];
       }
     }
 
-    if (this[startIdx + delElCount + delElCount] !== undefined) {
-      for (let i = 0; i < delElCount; i++) {
-        this[startIdx + delElCount + i]
-          = this[startIdx + delElCount + delElCount + i];
-      }
-    }
-
-    if (delElCount > this.length) {
+    if (delElementCount > this.length) {
       this.length = 0;
-      return delElCount;
+      return delElementCount;
     }
 
     this.length = (this.length - deletedItems.length);
 
-    if ([...items].length > 0) {
+    if (items.length > 0) {
       const addingArr = [ ...items ];
 
       this.length = this.length + addingArr.length;
-      for (let k = 0; k < this.length - startIdx; k++) {
+      for (let k = 0; k < this.length - startIndex; k++) {
         this[this.length - 1 - k]
           = this[this.length - 1 - addingArr.length - k];
       }
 
       for (let i = 0; i < addingArr.length; i++) {
-        this[startIdx + i] = addingArr[i];
+        this[startIndex + i] = addingArr[i];
       }
     }
 
