@@ -113,3 +113,43 @@ test('splice from empty array', () => {
   expect(result)
     .toEqual([]);
 });
+
+test('splice from empty array with new elements', () => {
+  const source = [];
+  const result = source.splice2(0, 0, 0, 1, 2, 3, 4, 5);
+
+  expect(source)
+    .toEqual([0, 1, 2, 3, 4, 5]);
+  expect(result)
+    .toEqual([]);
+});
+
+test('undefined as a first parameter', () => {
+  const source = [0, 1, 2, 3];
+  const result = source.splice2(undefined, 3);
+
+  expect(source)
+    .toEqual([3]);
+  expect(result)
+    .toEqual([0, 1, 2]);
+});
+
+test('undefined as a new element', () => {
+  const source = [0, 1, 2, 3];
+  const result = source.splice2(1, 2, undefined);
+
+  expect(source)
+    .toEqual([0, undefined, 3]);
+  expect(result)
+    .toEqual([1, 2]);
+});
+
+test('deleteCount < 0', () => {
+  const source = [0, 1, 2, 3];
+  const result = source.splice2(1, -1);
+
+  expect(source)
+    .toEqual([0, 1, 2, 3]);
+  expect(result)
+    .toEqual([]);
+});
