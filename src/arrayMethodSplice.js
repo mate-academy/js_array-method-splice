@@ -13,11 +13,14 @@ function applyCustomSplice() {
       return [];
     }
 
-    let first = start < 0 && start > -this.length
-      ? (this.length + start)
-      : start < -this.length || start === undefined
-        ? 0
-        : start;
+    let first = 0;
+    if (start < 0 && start > -this.length) {
+      first = this.length + start;
+    } else if (start < -this.length || start === undefined) {
+      first = 0;
+    } else {
+      first = start;
+    }
 
     const startPoint = first;
 
