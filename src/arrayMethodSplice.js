@@ -5,7 +5,6 @@
  */
 function applyCustomSplice() {
   [].__proto__.splice2 = function(start, deleteCount, ...items) {
-    let splicedArr = [];
     const leftArr = [];
     const rightArr = [];
     const removed = [];
@@ -14,24 +13,22 @@ function applyCustomSplice() {
       return [];
     }
 
-    let first = 0;
-
-    start < 0 && start > -this.length
-      ? (first = this.length + start)
+    let first = start < 0 && start > -this.length
+      ? (this.length + start)
       : start < -this.length || start === undefined
-        ? (first = 0)
-        : (first = start);
+        ? 0
+        : start;
 
     const startPoint = first;
-    let pauseFirst = 0;
 
-    deleteCount !== undefined
-      ? (pauseFirst = deleteCount + first)
-      : (pauseFirst = this.length);
+    let pauseFirst = deleteCount !== undefined
+      ? (deleteCount + first)
+      : this.length;
 
     for (first; first < pauseFirst; first++) {
       removed[removed.length] = this[first];
     }
+
     if (startPoint > 0) {
       for (let i = 0; i < startPoint; i++) {
         leftArr[leftArr.length] = this[i];
@@ -44,11 +41,9 @@ function applyCustomSplice() {
       }
     }
 
-    if ([...items].length > 0) {
-      splicedArr = [...leftArr, ...items, ...rightArr];
-    } else {
-      splicedArr = [...leftArr, ...rightArr];
-    }
+    const splicedArr = [...items].length > 0
+      ? [...leftArr, ...items, ...rightArr]
+      : [...leftArr, ...rightArr];
 
     for (let i = 0; i < splicedArr.length; i++) {
       this[i] = splicedArr[i];
