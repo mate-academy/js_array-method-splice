@@ -16,23 +16,24 @@ function applyCustomSplice() {
     if (arguments.length !== 0
       && (start !== undefined
         || (start === undefined && deleteCount !== undefined))) {
-      const startInd = start === undefined
+      const startIndex = start === undefined
         ? 0
         : indexNormalisation(start, this.length);
+
       const counter = deleteCount === undefined
         ? this.length
         : indexNormalisation(deleteCount);
 
-      const spliceArrary = [];
-      let spliceArraryIndex = 0;
+      const spliceOfArrary = [];
+      let spliceOfArraryIndex = 0;
       const leftArray = [];
       let leftArraryIndex = 0;
       const rightArray = [];
       let rightArraryIndex = 0;
 
       for (let i = 0; i < this.length; i++) {
-        if (i >= startInd && i < startInd + counter) {
-          spliceArrary[spliceArraryIndex++] = this[i];
+        if (i >= startIndex && i < startIndex + counter) {
+          spliceOfArrary[spliceOfArraryIndex++] = this[i];
         } else {
           if (i < start) {
             leftArray[leftArraryIndex++] = this[i];
@@ -41,14 +42,16 @@ function applyCustomSplice() {
           }
         }
       }
+
       const restArray = [...leftArray, ...items, ...rightArray];
 
       for (let i = 0; i < restArray.length; i++) {
         this[i] = restArray[i];
       }
+
       this.length = restArray.length;
 
-      return spliceArrary;
+      return spliceOfArrary;
     }
 
     return [];
