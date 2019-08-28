@@ -10,7 +10,7 @@ function applyCustomSplice() {
     }
 
     const result = [];
-    let arr = [];
+    let newArray = [];
     let startIndex = start || 0;
     let deleteIndex = deleteCount || this.length - 1;
 
@@ -22,30 +22,29 @@ function applyCustomSplice() {
 
     if (deleteCount === 0) {
       for (let j = 0; j < startIndex; j++) {
-        arr.push(this[j]);
+        newArray.push(this[j]);
       }
     } else {
       for (let j = 0; j <= deleteIndex; j++) {
         if (j >= startIndex) {
           result.push(this[j]);
         } else {
-          arr.push(this[j]);
+          newArray.push(this[j]);
         }
       }
     }
 
-    const len = arr.length;
-
-    arr = [...arr, ...items];
+    const len = newArray.length;
+    newArray = [...newArray, ...items];
 
     for (let i = result.length + len; i < this.length; i++) {
-      arr.push(this[i]);
+      newArray.push(this[i]);
     }
 
     this.length = 0;
 
-    for (let i = 0; i < arr.length; i++) {
-      this.push(arr[i]);
+    for (let i = 0; i < newArray.length; i++) {
+      this.push(newArray[i]);
     }
 
     return result;
