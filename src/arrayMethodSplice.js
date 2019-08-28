@@ -24,8 +24,8 @@ function applyCustomSplice() {
         ? this.length
         : indexNormalisation(deleteCount);
 
-      const spliceOfArrary = [];
-      let spliceOfArraryIndex = 0;
+      const splicedArrary = [];
+      let splicedArraryIndex = 0;
       const leftArray = [];
       let leftArraryIndex = 0;
       const rightArray = [];
@@ -33,7 +33,7 @@ function applyCustomSplice() {
 
       for (let i = 0; i < this.length; i++) {
         if (i >= startIndex && i < startIndex + counter) {
-          spliceOfArrary[spliceOfArraryIndex++] = this[i];
+          splicedArrary[splicedArraryIndex++] = this[i];
         } else {
           if (i < start) {
             leftArray[leftArraryIndex++] = this[i];
@@ -51,7 +51,7 @@ function applyCustomSplice() {
 
       this.length = restArray.length;
 
-      return spliceOfArrary;
+      return splicedArrary;
     }
 
     return [];
