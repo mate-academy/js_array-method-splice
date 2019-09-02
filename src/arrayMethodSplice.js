@@ -13,23 +13,23 @@ function applyCustomSplice() {
       return [];
     }
 
-    let removedPoint = 0;
+    let startPoint = 0;
     if (start < 0 && start > -this.length) {
-      removedPoint = this.length + start;
+      startPoint = this.length + start;
     } else if (start < -this.length || start === undefined) {
-      removedPoint = 0;
+      startPoint = 0;
     } else {
-      removedPoint = start;
+      startPoint = start;
     }
 
-    const removeStart = removedPoint;
+    const removeStart = startPoint;
 
     let removeEnd = deleteCount !== undefined
-      ? (deleteCount + removedPoint)
+      ? (deleteCount + startPoint)
       : this.length;
 
-    for (removedPoint; removedPoint < removeEnd; removedPoint++) {
-      removedElements[removedElements.length] = this[removedPoint];
+    for (startPoint; startPoint < removeEnd; startPoint++) {
+      removedElements[removedElements.length] = this[startPoint];
     }
 
     if (removeStart > 0) {
