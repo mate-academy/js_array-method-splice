@@ -17,15 +17,19 @@ function applyCustomSplice() {
     if (start < 0) {
       deleteFrom = start + this.length;
     }
+
     if (start > this.length - 1) {
       deleteFrom = 0; deleteNumber = 0;
     }
+
     if (start < -this.length) {
       deleteFrom = 0;
     }
+
     if (arguments.length === 0) {
       deleteFrom = this.length;
     }
+
     if (deleteCount < 0) {
       deleteNumber = 0;
     }
