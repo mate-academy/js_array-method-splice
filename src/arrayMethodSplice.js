@@ -4,15 +4,13 @@
  * Implement method Splice
  */
 function applyCustomSplice() {
-  [].__proto__.splice2 = function(start, del, ...items) {
+  [].__proto__.splice2 = function(start = 0, del, ...items) {
     const beforeStartIndex = [];
     const afterDeleteIndex = [];
     const output = [];
-    const startIndex = start === undefined
-      ? 0
-      : start >= 0
-        ? start
-        : Math.max(start + this.length, 0);
+    const startIndex = start >= 0
+      ? start
+      : Math.max(start + this.length, 0);
     const deleteCount = del === undefined
       ? this.length - startIndex
       : del;
