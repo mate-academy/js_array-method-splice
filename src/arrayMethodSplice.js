@@ -22,7 +22,11 @@ function applyCustomSplice() {
       startPoint = start;
     }
 
-    const removeStart = startPoint;
+    if (startPoint > 0) {
+      for (let i = 0; i < startPoint; i++) {
+        leftArr[leftArr.length] = this[i];
+      }
+    }
 
     let removeEnd = deleteCount !== undefined
       ? (deleteCount + startPoint)
@@ -30,12 +34,6 @@ function applyCustomSplice() {
 
     for (startPoint; startPoint < removeEnd; startPoint++) {
       removedElements[removedElements.length] = this[startPoint];
-    }
-
-    if (removeStart > 0) {
-      for (let i = 0; i < removeStart; i++) {
-        leftArr[leftArr.length] = this[i];
-      }
     }
 
     if (removeEnd !== this.length) {
