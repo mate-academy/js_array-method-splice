@@ -18,11 +18,9 @@ function applyCustomSplice() {
       deleteCounter = 0;
     }
 
-    const deletedItems = this.slice(startIndex,
-      startIndex + deleteCounter || this.length);
+    const deletedItems = this.slice(startIndex, startIndex + deleteCounter || this.length);
     const existLeft = this.slice(0, startIndex);
-    const existRight = this.slice(startIndex + deleteCounter
-       || this.length, this.length);
+    const existRight = this.slice(startIndex + deleteCounter || this.length, this.length);
 
     this.length = 0;
     const a = [...existLeft, ...items, ...existRight];
