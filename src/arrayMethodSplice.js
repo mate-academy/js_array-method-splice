@@ -23,8 +23,8 @@ function applyCustomSplice() {
     const existRight = this.slice(startIndex + deleteCounter || this.length, this.length);
 
     this.length = 0;
-    const a = [...existLeft, ...items, ...existRight];
-    this.push(...a);
+    const mutatedArr = [...existLeft, ...items, ...existRight];
+    this.push(...mutatedArr);
 
     return deletedItems;
   };
