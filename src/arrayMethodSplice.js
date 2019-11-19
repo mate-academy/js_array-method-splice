@@ -5,13 +5,13 @@
  */
 function applyCustomSplice() {
   [].__proto__.splice2 = function(start, deleteCount, ...items) {
-    if ((start === undefined && deleteCount === undefined)
+    if (arguments.length === 0
       || (start >= this.length && start !== 0)
       || deleteCount < 0) {
       return [];
     }
 
-    let begin = start === undefined && deleteCount > 0 ? 0 : start;
+    let begin = start === undefined ? 0 : start;
     begin = begin >= 0 ? begin : this.length + begin;
     begin = begin < 0 ? 0 : begin;
     const delCount = deleteCount
