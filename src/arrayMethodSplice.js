@@ -16,24 +16,6 @@ function applyCustomSplice() {
     begin = begin < 0 ? 0 : begin;
     const delCount = deleteCount
     === undefined ? this.length - begin : deleteCount;
-    const copyArr1 = [...this];
-    const copyArr2 = [...this];
-
-    copyArr1.length = begin;
-
-    for (let i = 0; i < copyArr2.length - begin - delCount; i++) {
-      copyArr2[i] = copyArr2[i + begin + delCount];
-    }
-
-    copyArr2.length = copyArr2.length - begin - delCount;
-
-    for (let i = 0; i < items.length; i++) {
-      copyArr1[copyArr1.length] = items[i];
-    }
-
-    for (let i = 0; i < copyArr2.length; i++) {
-      copyArr1[copyArr1.length] = copyArr2[i];
-    }
 
     const result = [];
 
@@ -41,11 +23,23 @@ function applyCustomSplice() {
       result[i] = this[i + begin];
     }
 
-    for (let i = 0; i < copyArr1.length; i++) {
-      this[i] = copyArr1[i];
+    const copyArr = [...this];
+
+    this.length = begin;
+
+    for (let i = 0; i < copyArr.length - begin - delCount; i++) {
+      copyArr[i] = copyArr[i + begin + delCount];
     }
 
-    this.length = copyArr1.length;
+    copyArr.length = copyArr.length - begin - delCount;
+
+    for (let i = 0; i < items.length; i++) {
+      this[this.length] = items[i];
+    }
+
+    for (let i = 0; i < copyArr.length; i++) {
+      this[this.length] = copyArr[i];
+    }
 
     return result;
   };
