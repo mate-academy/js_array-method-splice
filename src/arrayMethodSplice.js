@@ -13,19 +13,11 @@ function applyCustomSplice() {
       return splice;
     }
 
-    if (start < -this.length) {
-      for (let i = 0; i < this.length; i++) {
-        splice[i] = this[i];
-      }
-      this.length = 0;
-      return splice;
-    }
-
     let newStart = start;
-    if (start === undefined) {
+    if ((newStart === undefined) || (newStart < -this.length)) {
       newStart = 0;
     }
-    if (start < 0) {
+    if (newStart < 0) {
       newStart = this.length + start;
     }
 
@@ -40,6 +32,7 @@ function applyCustomSplice() {
     for (let i = newStart; i < newStart + deleteCount; i++) {
       splice[splice.length] = this[i];
     }
+
     for (let i = 0; i < newStart; i++) {
       res[res.length] = this[i];
     }
