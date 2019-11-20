@@ -8,8 +8,8 @@ function applyCustomSplice() {
     const res = [];
     const splice = [];
     if (arguments.length === 0
-      || ((start > this.length) && start !== 0)
-      || (deleteCount < 0)) {
+      || (deleteCount < 0)
+      || ((start >= this.length) && start !== 0)) {
       return splice;
     }
 
