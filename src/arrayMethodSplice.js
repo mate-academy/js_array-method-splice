@@ -25,7 +25,6 @@ function applyCustomSplice() {
       begin = this.length;
     }
 
-    const pushItems = items;
     let chengeArr = [];
     const leftArr = [];
     const startNewPart = begin + deleteCount;
@@ -61,10 +60,10 @@ function applyCustomSplice() {
 
       this.length = begin;
 
-      if (pushItems.length >= 0) {
-        for (let i = 0; i < pushItems.length; i++) {
+      if (items.length >= 0) {
+        for (let i = 0; i < items.length; i++) {
           this.length += 1;
-          this[this.length - 1] = pushItems[i];
+          this[this.length - 1] = items[i];
         }
       }
 
