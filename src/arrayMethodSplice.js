@@ -44,14 +44,12 @@ function applyCustomSplice() {
     }
 
     for (let i = startNewPart; i < this.length; i++) {
-      leftArr.length += 1;
-      leftArr[leftArr.length - 1] = this[i];
+      leftArr[leftArr.length] = this[i];
     }
 
     if (deleteItems >= 0) {
       for (let c = begin; c <= deleteItems; c++) {
-        chengeArr.length += 1;
-        chengeArr[chengeArr.length - 1] = this[c];
+        chengeArr[chengeArr.length] = this[c];
       }
 
       if (deleteItems === 0) {
@@ -62,14 +60,12 @@ function applyCustomSplice() {
 
       if (items.length >= 0) {
         for (let i = 0; i < items.length; i++) {
-          this.length += 1;
-          this[this.length - 1] = items[i];
+          this[this.length] = items[i];
         }
       }
 
       for (let i = 0; i < leftArr.length; i++) {
-        this.length += 1;
-        this[this.length - 1] = leftArr[i];
+        this[this.length] = leftArr[i];
       }
     }
 
