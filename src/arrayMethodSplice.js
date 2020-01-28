@@ -6,12 +6,12 @@
 function applyCustomSplice() {
   [].__proto__.splice2 = function(start, deleteCount, ...items) {
     let searchFrom;
-    const copied = [];
-    let deletedItems = [];
+    let copiedItemsFromStartIndex = [];
+    const deletedItems = [];
     let deleteLength;
 
     if ((start < 0 && (this.length + start) < 0)
-    || (start === undefined && arguments.length)) {
+    || (!start && arguments.length)) {
       searchFrom = 0;
     } else if (start < 0) {
       searchFrom = this.length + start;
@@ -22,40 +22,34 @@ function applyCustomSplice() {
     }
 
     for (let i = searchFrom; i < this.length; i++) {
-      copied[copied.length] = this[i];
+      copiedItemsFromStartIndex = [ ...copiedItemsFromStartIndex, this[i] ];
     }
 
-    const copiedLength = copied.length;
-
-    for (let i = 0; i < copiedLength; i++) {
-      this.length--;
-    }
+    this.length = this.length - copiedItemsFromStartIndex.length;
 
     if (arguments[1] === undefined) {
-      deletedItems = [ ...copied ];
-
-      return deletedItems;
+      return copiedItemsFromStartIndex;
     }
 
-    (deleteCount > copied.length)
-      ? deleteLength = copied.length
+    (deleteCount > copiedItemsFromStartIndex.length)
+      ? deleteLength = copiedItemsFromStartIndex.length
       : deleteLength = deleteCount;
 
     for (let i = 0; i < deleteLength; i++) {
-      deletedItems[deletedItems.length] = copied[0];
+      deletedItems[deletedItems.length] = copiedItemsFromStartIndex[0];
 
-      for (let j = 0; j < copied.length; j++) {
-        copied[j] = copied[j + 1];
+      for (let j = 0; j < copiedItemsFromStartIndex.length; j++) {
+        copiedItemsFromStartIndex[j] = copiedItemsFromStartIndex[j + 1];
       }
-      copied.length--;
+      copiedItemsFromStartIndex.length--;
     }
 
     for (let i = 0; i < items.length; i++) {
       this[searchFrom + i] = items[i];
     }
 
-    for (let i = 0; i < copied.length; i++) {
-      this[this.length] = copied[i];
+    for (let i = 0; i < copiedItemsFromStartIndex.length; i++) {
+      this[this.length] = copiedItemsFromStartIndex[i];
     }
 
     return deletedItems;
