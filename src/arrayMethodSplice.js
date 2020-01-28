@@ -6,12 +6,13 @@
 function applyCustomSplice() {
   [].__proto__.splice2 = function(start, deleteCount, ...items) {
     let searchFrom;
-    let copiedItemsFromStartIndex = [];
+    const itemsFromStartIndex = [];
     const deletedItems = [];
     let deleteLength;
 
     if ((start < 0 && (this.length + start) < 0)
-    || (!start && arguments.length)) {
+      || (!start && arguments.length)
+    ) {
       searchFrom = 0;
     } else if (start < 0) {
       searchFrom = this.length + start;
@@ -22,34 +23,34 @@ function applyCustomSplice() {
     }
 
     for (let i = searchFrom; i < this.length; i++) {
-      copiedItemsFromStartIndex = [ ...copiedItemsFromStartIndex, this[i] ];
+      itemsFromStartIndex[itemsFromStartIndex.length] = this[i];
     }
 
-    this.length = this.length - copiedItemsFromStartIndex.length;
+    this.length = this.length - itemsFromStartIndex.length;
 
     if (arguments[1] === undefined) {
-      return copiedItemsFromStartIndex;
+      return itemsFromStartIndex;
     }
 
-    (deleteCount > copiedItemsFromStartIndex.length)
-      ? deleteLength = copiedItemsFromStartIndex.length
+    (deleteCount > itemsFromStartIndex.length)
+      ? deleteLength = itemsFromStartIndex.length
       : deleteLength = deleteCount;
 
     for (let i = 0; i < deleteLength; i++) {
-      deletedItems[deletedItems.length] = copiedItemsFromStartIndex[0];
+      deletedItems[deletedItems.length] = itemsFromStartIndex[0];
 
-      for (let j = 0; j < copiedItemsFromStartIndex.length; j++) {
-        copiedItemsFromStartIndex[j] = copiedItemsFromStartIndex[j + 1];
+      for (let j = 0; j < itemsFromStartIndex.length; j++) {
+        itemsFromStartIndex[j] = itemsFromStartIndex[j + 1];
       }
-      copiedItemsFromStartIndex.length--;
+      itemsFromStartIndex.length--;
     }
 
     for (let i = 0; i < items.length; i++) {
       this[searchFrom + i] = items[i];
     }
 
-    for (let i = 0; i < copiedItemsFromStartIndex.length; i++) {
-      this[this.length] = copiedItemsFromStartIndex[i];
+    for (let i = 0; i < itemsFromStartIndex.length; i++) {
+      this[this.length] = itemsFromStartIndex[i];
     }
 
     return deletedItems;
