@@ -6,11 +6,9 @@
 function applyCustomSplice() {
   [].__proto__.splice2 = function(start, deleteCount, ...items) {
     let begin = start;
-    let deleteItems = deleteCount;
 
     if (begin === undefined) {
       begin = 0;
-      deleteItems = deleteCount - 1;
     }
 
     if (begin < 0 && Math.abs(begin) > this.length) {
@@ -35,7 +33,7 @@ function applyCustomSplice() {
       return [];
     }
 
-    if (deleteItems === undefined) {
+    if (deleteCount === undefined) {
       for (let i = begin; i < this.length; i++) {
         chengeArr.push(this[i]);
       }
@@ -47,12 +45,12 @@ function applyCustomSplice() {
       leftArr[leftArr.length] = this[i];
     }
 
-    if (deleteItems >= 0) {
-      for (let c = begin; c <= deleteItems; c++) {
+    if (deleteCount >= 0) {
+      for (let c = begin; c < startNewPart; c++) {
         chengeArr[chengeArr.length] = this[c];
       }
 
-      if (deleteItems === 0) {
+      if (deleteCount === 0) {
         chengeArr = [];
       }
 
