@@ -4,57 +4,51 @@
  * Implement method Splice
  */
 function applyCustomSplice() {
-  [].__proto__.splice2 = function(start, deleteCount, ...items) {
-    let begin = start;
+  [].__proto__.splice2 = function(start = 0, deleteCount, ...items) {
+    let startFrom = start;
 
-    if (begin === undefined) {
-      begin = 0;
+    if (startFrom < 0 && Math.abs(startFrom) > this.length) {
+      startFrom = 0;
     }
 
-    if (begin < 0 && Math.abs(begin) > this.length) {
-      begin = 0;
+    if (startFrom < 0) {
+      startFrom += this.length;
     }
 
-    if (begin < 0) {
-      begin += this.length;
+    if (startFrom > this.length) {
+      startFrom = this.length;
     }
 
-    if (begin > this.length) {
-      begin = this.length;
-    }
+    let changedArr = [];
+    const secondNotChangedPart = [];
+    const startOfNewPart = startFrom + deleteCount;
 
-    let chengeArr = [];
-    const leftArr = [];
-    const startNewPart = begin + deleteCount;
-
-    if (arguments.length === 0) {
-      this.length = this.length;
-
+    if (!arguments.length) {
       return [];
     }
 
     if (deleteCount === undefined) {
-      for (let i = begin; i < this.length; i++) {
-        chengeArr.push(this[i]);
+      for (let i = startFrom; i < this.length; i++) {
+        changedArr.push(this[i]);
       }
 
-      this.length = begin;
+      this.length = startFrom;
     }
 
-    for (let i = startNewPart; i < this.length; i++) {
-      leftArr[leftArr.length] = this[i];
+    for (let i = startOfNewPart; i < this.length; i++) {
+      secondNotChangedPart[secondNotChangedPart.length] = this[i];
     }
 
     if (deleteCount >= 0) {
-      for (let c = begin; c < startNewPart; c++) {
-        chengeArr[chengeArr.length] = this[c];
+      for (let i = startFrom; i < startOfNewPart; i++) {
+        changedArr[changedArr.length] = this[i];
       }
 
       if (deleteCount === 0) {
-        chengeArr = [];
+        changedArr = [];
       }
 
-      this.length = begin;
+      this.length = startFrom;
 
       if (items.length >= 0) {
         for (let i = 0; i < items.length; i++) {
@@ -62,12 +56,12 @@ function applyCustomSplice() {
         }
       }
 
-      for (let i = 0; i < leftArr.length; i++) {
-        this[this.length] = leftArr[i];
+      for (let i = 0; i < secondNotChangedPart.length; i++) {
+        this[this.length] = secondNotChangedPart[i];
       }
     }
 
-    return chengeArr;
+    return changedArr;
   };
 }
 
