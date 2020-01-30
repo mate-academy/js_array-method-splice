@@ -5,7 +5,7 @@
  */
 
 function applyCustomSplice() {
-  [].__proto__.splice2 = function(start, deleteCount, ...items) {
+  [].__proto__.splice2 = function(start = 0, deleteCount, ...items) {
     const result = [];
     const deletedItems = [];
 
