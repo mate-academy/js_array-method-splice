@@ -9,9 +9,9 @@ function applyCustomSplice() {
     const result = [];
     const deletedItems = [];
 
-    if (arguments.length === 0
+    if (!arguments.length
       || (deleteCount < 0)
-      || ((start >= this.length) && start !== 0)) {
+      || ((start >= this.length) && start)) {
       return deletedItems;
     }
 
