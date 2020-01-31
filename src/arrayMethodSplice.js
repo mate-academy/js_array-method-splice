@@ -17,7 +17,7 @@ function applyCustomSplice() {
 
     let startSearch = start;
 
-    if ((startSearch === undefined) || -startSearch > this.length) {
+    if (-startSearch > this.length) {
       startSearch = 0;
     } else if (startSearch < 0) {
       startSearch = this.length + start;
@@ -27,6 +27,7 @@ function applyCustomSplice() {
       for (let i = startSearch; i < this.length; i++) {
         deletedItems[deletedItems.length] = this[i];
       }
+
       this.length = startSearch;
 
       return deletedItems;
