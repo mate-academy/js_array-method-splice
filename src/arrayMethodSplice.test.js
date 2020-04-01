@@ -1,6 +1,7 @@
 'use strict';
 
 const applyCustomSplice = require('./arrayMethodSplice');
+
 applyCustomSplice();
 
 test('splice2 is added to [].__proto__', () => {
@@ -19,6 +20,7 @@ test('splice without arguments', () => {
 
   expect(source)
     .toEqual([0, 1, 2, 3]);
+
   expect(result)
     .toEqual([]);
 });
@@ -29,6 +31,7 @@ test('splice(1)', () => {
 
   expect(source)
     .toEqual([0]);
+
   expect(result)
     .toEqual([1, 2, 3]);
 });
@@ -39,6 +42,7 @@ test('splice(1, 2)', () => {
 
   expect(source)
     .toEqual([0, 3]);
+
   expect(result)
     .toEqual([1, 2]);
 });
@@ -49,6 +53,7 @@ test(`splice(1, 2, 'a', 'b', 'c'`, () => {
 
   expect(source)
     .toEqual([0, 'a', 'b', 'c', 3]);
+
   expect(result)
     .toEqual([1, 2]);
 });
@@ -59,6 +64,7 @@ test(`splice(1, 0, 'a', 'b', 'c')`, () => {
 
   expect(source)
     .toEqual([0, 'a', 'b', 'c', 1, 2, 3]);
+
   expect(result)
     .toEqual([]);
 });
@@ -80,6 +86,7 @@ test('splice(100)', () => {
 
   expect(source)
     .toEqual([0, 1, 2, 3]);
+
   expect(result)
     .toEqual([]);
 });
@@ -90,6 +97,7 @@ test('splice(-1)', () => {
 
   expect(source)
     .toEqual([0, 1, 2]);
+
   expect(result)
     .toEqual([3]);
 });
@@ -100,6 +108,7 @@ test('splice(-100)', () => {
 
   expect(source)
     .toEqual([]);
+
   expect(result)
     .toEqual([0, 1, 2, 3]);
 });
@@ -110,6 +119,7 @@ test('splice from empty array', () => {
 
   expect(source)
     .toEqual([]);
+
   expect(result)
     .toEqual([]);
 });
@@ -120,6 +130,7 @@ test('splice from empty array with new elements', () => {
 
   expect(source)
     .toEqual([0, 1, 2, 3, 4, 5]);
+
   expect(result)
     .toEqual([]);
 });
@@ -130,6 +141,7 @@ test('undefined as a first parameter', () => {
 
   expect(source)
     .toEqual([3]);
+
   expect(result)
     .toEqual([0, 1, 2]);
 });
@@ -140,6 +152,7 @@ test('undefined as a new element', () => {
 
   expect(source)
     .toEqual([0, undefined, 3]);
+
   expect(result)
     .toEqual([1, 2]);
 });
@@ -150,6 +163,7 @@ test('deleteCount < 0', () => {
 
   expect(source)
     .toEqual([0, 1, 2, 3]);
+
   expect(result)
     .toEqual([]);
 });
