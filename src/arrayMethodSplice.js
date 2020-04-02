@@ -14,9 +14,9 @@ function applyCustomSplice() {
     if (myArguments.length > 0) {
       if (start > myLength && myLength > 0) {
         myStart = myLength;
-      } else if (start < 0 && Math.abs(start) <= myLength -1) {
+      } else if (start < 0 && Math.abs(start) <= myLength - 1) {
         myStart = myLength + start;
-      } else if (start < 0 && Math.abs(start) > myLength -1) {
+      } else if (start < 0 && Math.abs(start) > myLength - 1) {
         myStart = 0;
       }
 
