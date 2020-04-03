@@ -32,7 +32,7 @@ function applyCustomSplice() {
         startItems.push(this[i]);
       }
 
-      const length = this.length - del + 1;
+      const length = del + startIndex;
 
       for (let i = startIndex; i < length; i++) {
         deleteItems.push(this[i]);
