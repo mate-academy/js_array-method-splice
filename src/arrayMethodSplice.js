@@ -22,7 +22,9 @@ function applyCustomSplice() {
 
       if (deleteCount > 0) {
         for (let i = 0; i < deleteCount; i++) {
-          newArr[i] = this[i + myStart];
+          if (this[i + myStart] !== undefined) {
+            newArr[i] = this[i + myStart];
+          }
         }
 
         for (let i = 0; i < deleteCount; i++) {
