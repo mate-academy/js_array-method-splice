@@ -33,15 +33,21 @@ function applyCustomSplice() {
 
       this.length = indexStart;
     } else if (deleteCount > 0) {
+      let remove = deleteCount;
+
+      if (deleteCount + indexStart > this.length) {
+        remove = this.length - indexStart;
+      }
+
       for (let i = indexStart; i < this.length; i++) {
-        if (i <= indexStart + deleteCount - 1) {
+        if (i <= indexStart + remove - 1) {
           deletedItems.push(this[i]);
         }
 
-        this[i] = this[i + deleteCount];
+        this[i] = this[i + remove];
       }
 
-      this.length -= deleteCount;
+      this.length -= remove;
     }
 
     if (arguments.length > 2) {
