@@ -50,7 +50,7 @@ function applyCustomSplice() {
 
       let prevLength = this.length;
 
-      if (items.length - deleteCount < 0) {
+      if (items.length - currentDeleteCount < 0) {
         for (let i = currentStart; i < currentStart + items.length; i++) {
           this[i] = items[j];
           j++;
@@ -58,21 +58,21 @@ function applyCustomSplice() {
 
         for (
           let i = currentStart + items.length;
-          i < prevLength + items.length - deleteCount;
+          i < prevLength + items.length - currentDeleteCount;
           i++
         ) {
-          this[i] = this[i + deleteCount - items.length];
+          this[i] = this[i + currentDeleteCount - items.length];
         }
 
-        this.length = prevLength + items.length - deleteCount;
+        this.length = prevLength + items.length - currentDeleteCount;
 
         return arr;
       }
 
-      this.length = prevLength + items.length - deleteCount;
+      this.length = prevLength + items.length - currentDeleteCount;
 
       for (let e = this.length - 1; e > prevLength - 1; e--) {
-        this[e] = this[e - (items.length - deleteCount)];
+        this[e] = this[e - (items.length - currentDeleteCount)];
 
         if (this[e] === undefined) {
           prevLength = e + 1;
