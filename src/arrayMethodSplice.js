@@ -71,7 +71,7 @@ function applyCustomSplice() {
 
       this.length = prevLength + items.length - currentDeleteCount;
 
-      for (let e = this.length - 1; e > prevLength - 1; e--) {
+      for (let e = this.length - 1; e > indexOfLastDeletedElement; e--) {
         this[e] = this[e - (items.length - currentDeleteCount)];
 
         if (this[e] === undefined) {
@@ -79,11 +79,20 @@ function applyCustomSplice() {
         }
       }
 
-      j = items.length - 1;
+      if (indexOfLastDeletedElement >= prevLength - 1) {
+        j = items.length - 1;
 
-      for (let e = prevLength - 1; e >= currentStart; e--) {
-        this[e] = items[j];
-        j--;
+        for (let e = prevLength - 1; e >= currentStart; e--) {
+          this[e] = items[j];
+          j--;
+        }
+      } else {
+        j = 0;
+
+        for (let e = currentStart; e < currentStart + items.length; e++) {
+          this[e] = items[j];
+          j++;
+        }
       }
     }
 
