@@ -8,6 +8,7 @@ function applyCustomSplice() {
     const initialLength = this.length;
     let startIndex = start;
     let deleted = [];
+    let tail = [];
 
     if (arguments.length === 0) {
       return deleted;
@@ -43,7 +44,7 @@ function applyCustomSplice() {
         return deleted;
       }
 
-      const tail = this.splice2(startIndex);
+      tail = this.splice2(startIndex);
 
       for (let i = 0; i < deleteCount; i++) {
         deleted[i] = tail[i];
@@ -56,7 +57,7 @@ function applyCustomSplice() {
       return deleted;
     }
 
-    const tailItems = this.splice2(startIndex + deleteCount);
+    tail = this.splice2(startIndex + deleteCount);
 
     deleted = this.splice2(startIndex);
 
@@ -64,8 +65,8 @@ function applyCustomSplice() {
       this[startIndex + i] = items[i];
     }
 
-    for (let i = 0; i < tailItems.length; i++) {
-      this[startIndex + items.length + i] = tailItems[i];
+    for (let i = 0; i < tail.length; i++) {
+      this[startIndex + items.length + i] = tail[i];
     }
 
     return deleted;
