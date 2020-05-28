@@ -14,6 +14,14 @@ function applyCustomSplice() {
       newCounter = 0;
     }
 
+    if (arguments[0] === undefined && newCounter !== undefined) {
+      for (let i = 0; i < newCounter; i++) {
+        removedList[i] = this[i];
+        this[i] = this[i + newCounter];
+      }
+      this.length = this.length - newCounter;
+    }
+
     if (Math.abs(arguments[0]) > this.length
     && arguments[1] === undefined
     && items.length === 0) {
@@ -90,7 +98,7 @@ function applyCustomSplice() {
       }
       this.length = newCounter;
     }
-    console.log (newStart, newCounter, this.length, removedList, this, this.length, array);
+    console.log (newStart, newCounter, this.length, removedList, this, items);
 
     return removedList;
   };
