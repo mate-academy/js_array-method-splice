@@ -18,10 +18,10 @@ function applyCustomSplice() {
     }
 
     if (startIndex < 0) {
-      if ((startIndex * -1) > initialLength) {
+      if (-startIndex > initialLength) {
         startIndex = 0;
       } else {
-        startIndex = initialLength + startIndex;
+        startIndex += initialLength;
       }
     } else if (startIndex > initialLength) {
       startIndex = initialLength;
