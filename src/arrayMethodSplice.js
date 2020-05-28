@@ -25,24 +25,29 @@ function applyCustomSplice() {
       : startIndex + deleteCount;
 
     for (let i = startIndex; i < endIndex; i++) {
-      if (items.length === 0) {
-        removedElements.push(this[i]);
+      removedElements.push(this[i]);
 
-        if (deleteCount < this.length) {
-          this[i] = this[i + deleteCount];
-        }
-      } else {
-        removedElements.push(this[i]);
-        this.length += items.length;
-        this[i + items.length] = this[i];
-        this[i] = items[i - startIndex];
+      if (deleteCount < this.length) {
+        this[i] = this[i + deleteCount];
       }
     }
-    this.length -= removedElements.length;
+    this.length = this.length - removedElements.length + items.length;
+
+    if (items.length > 0) {
+      for (
+        let i = startIndex, itemIndex = 0;
+        itemIndex < items.length;
+        i++, itemIndex++
+      ) {
+        if (i + items.length < this.length) {
+          this[i + items.length] = this[i];
+        }
+        this[i] = items[itemIndex];
+      }
+    }
 
     return removedElements;
   };
 }
-// applyCustomSplice();
-// console.log([0, 1, 2, 3].splice2(1, 2, 'a', 'b', 'c'));
+
 module.exports = applyCustomSplice;
