@@ -21,6 +21,22 @@ function applyCustomSplice() {
       }
       this.length = this.length - newCounter;
     }
+    // when start <0
+
+    if (arguments[0] < 0 && newCounter !== undefined) {
+      for (let i = (this.length + newStart);
+        i < (this.length + newStart + newCounter); i++) {
+        removedList[i - newStart - this.length] = this[i];
+      }
+
+      for (let j = (this.length + newStart + newCounter);
+        j < this.length; j++) {
+        this[j + newStart + 1] = this[j];
+      }
+      this.length = array.length + newStart + 1;
+
+      return removedList;
+    }
 
     if (Math.abs(arguments[0]) > this.length
     && arguments[1] === undefined
@@ -37,6 +53,17 @@ function applyCustomSplice() {
 
     if (newCounter > (this.length - newStart)) {
       newCounter = this.length - newStart;
+    }
+
+    //  when start < 0 && counter = undefined
+
+    if (arguments[0] < 0 && newCounter === undefined) {
+      for (let i = (this.length + arguments[0]); i < (this.length); i++) {
+        removedList[i - newStart - this.length] = this[i];
+      }
+      this.length = array.length + newStart;
+
+      return removedList;
     }
     // example splice (1,2)
 
@@ -98,7 +125,6 @@ function applyCustomSplice() {
       }
       this.length = newCounter;
     }
-    console.log (newStart, newCounter, this.length, removedList, this, items);
 
     return removedList;
   };
