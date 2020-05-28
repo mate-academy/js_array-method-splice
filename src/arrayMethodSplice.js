@@ -3,6 +3,43 @@
 /**
  * Implement method Splice
  */
+function applyCustomShift() {
+  [].__proto__.shift2 = function() {
+    const length = this.length;
+
+    if (length === 0) {
+      return undefined;
+    }
+
+    const shifted = this[0];
+
+    for (let i = 0; i < length; i++) {
+      this[i] = this[i + 1];
+    }
+
+    this.length = length - 1;
+
+    return shifted;
+  };
+}
+
+applyCustomShift();
+
+function applyCustomPush() {
+  [].__proto__.push2 = function(...elements) {
+    let index = this.length;
+
+    for (const element of elements) {
+      this[index] = element;
+      index++;
+    }
+
+    return this.length;
+  };
+}
+
+applyCustomPush();
+
 function applyCustomSplice() {
   [].__proto__.splice2 = function(start, deleteCount, ...items) {
     const length = this.length;
@@ -30,7 +67,7 @@ function applyCustomSplice() {
       }
 
       for (let i = startIndex; i < length; i++) {
-        modified.push(this[i]);
+        modified.push2(this[i]);
       }
       this.length = startIndex;
 
@@ -47,11 +84,11 @@ function applyCustomSplice() {
       const tail = this.splice2(startIndex);
 
       for (let i = 0; i < deleteCountIndex; i++) {
-        modified.push(tail.shift());
+        modified.push2(tail.shift2());
       }
 
       while (tail.length !== 0) {
-        this.push(tail.shift());
+        this.push2(tail.shift2());
       }
 
       return modified;
@@ -62,11 +99,11 @@ function applyCustomSplice() {
     modified = this.splice2(startIndex);
 
     for (let i = 0; i < items.length; i++) {
-      this.push(items[i]);
+      this.push2(items[i]);
     }
 
     while (tailItems.length !== 0) {
-      this.push(tailItems.shift());
+      this.push2(tailItems.shift2());
     }
 
     return modified;
