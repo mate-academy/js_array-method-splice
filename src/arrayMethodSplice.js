@@ -32,23 +32,28 @@ function applyCustomSplice() {
     }
 
     const deletedValues = [];
+    // length of the array that should be after splice operations
     const desirableLength = this.length - changedDeleteCount + items.length;
 
     if (desirableLength < this.length) {
+      // how many iterations should script do
       const timeToStop = changedStart + changedDeleteCount;
+      // how many elements should script move to the left
       let elementsToMove = this.length - timeToStop;
 
       for (let i = changedStart; i <= timeToStop; i++) {
         if (deletedValues.length < changedDeleteCount) {
           deletedValues[deletedValues.length] = this[i];
         }
-        // console.log(this[i]);
+
+        const addedElementsCounter = i - changedStart;
 
         if (items.length) {
-          if (i - changedStart < items.length) {
-            this[i] = items[i - changedStart]; // counter = i-changeddStart?
+          if (addedElementsCounter < items.length) {
+            this[i] = items[addedElementsCounter]; // counter = i-changeddStart?
           }
         }
+        // if first parameter undefined
 
         if (changedStart === 0) {
           this[i] = this[i + changedDeleteCount];
@@ -59,12 +64,16 @@ function applyCustomSplice() {
           elementsToMove--;
         }
       }
-
+      /* after shifting elements to the left and adding removed elements
+      to the specific array, we could modify our array */
       this.length = desirableLength;
     } else {
+      // at the beginning we can change our array length
       this.length = desirableLength;
+      // how much elements should we remove
 
       let amountToRemove = changedDeleteCount;
+      // how much indexes to the left should we move our elements
       let amountToMove = desirableLength - items.length - 1;
 
       for (let i = changedStart; i < this.length; i++) {
@@ -78,8 +87,10 @@ function applyCustomSplice() {
           amountToMove--;
         }
 
-        if (i - changedStart < items.length) {
-          this[i] = items[i - changedStart]; // counter = i-changeddStart?
+        const addedElementsCounter = i - changedStart;
+
+        if (addedElementsCounter < items.length) {
+          this[i] = items[addedElementsCounter];
         }
       }
     }
@@ -87,5 +98,7 @@ function applyCustomSplice() {
     return deletedValues;
   };
 }
+
+applyCustomSplice();
 
 module.exports = applyCustomSplice;
