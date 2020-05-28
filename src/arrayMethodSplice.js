@@ -69,7 +69,7 @@ function applyCustomSplice() {
 
     if (newStart !== undefined
       && newCounter !== undefined
-      && items.length === 0) {
+      && (items.length === 0)) {
       for (let i = newStart; i < (newStart + deleteCount); i++) {
         removedList[i - newStart] = this[i];
       }
@@ -102,7 +102,7 @@ function applyCustomSplice() {
 
       for (let i = 0; i < (array.length - newCounter + items.length); i++) {
         if (i >= newStart) {
-          if (items[i - newStart] !== undefined) {
+          if ([i - newStart] < items.length) {
             this[i] = items[i - newStart];
           } else {
             if ((array.length - newCounter - newStart) > 0) {
