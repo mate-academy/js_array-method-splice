@@ -54,7 +54,4 @@ function applyCustomSplice() {
   };
 }
 
-// applyCustomSplice();
-// const source = [0, 1, 2, 3];
-// console.log(source.splice2(1, 1), source)
 module.exports = applyCustomSplice;
