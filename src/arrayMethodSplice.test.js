@@ -124,17 +124,6 @@ test('splice from empty array', () => {
     .toEqual([]);
 });
 
-test('splice from empty array with new elements', () => {
-  const source = [];
-  const result = source.splice2(0, 0, 0, 1, 2, 3, 4, 5);
-
-  expect(source)
-    .toEqual([0, 1, 2, 3, 4, 5]);
-
-  expect(result)
-    .toEqual([]);
-});
-
 test('undefined as a first parameter', () => {
   const source = [0, 1, 2, 3];
   const result = source.splice2(undefined, 3);
