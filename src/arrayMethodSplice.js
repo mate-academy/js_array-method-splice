@@ -4,31 +4,20 @@
  * Implement method Splice
  */
 function applyCustomSplice() {
-  [].__proto__.splice2 = function(start, deleteCount, ...items) {
+  [].__proto__.splice2 = function(start = 0, deleteCount, ...items) {
     const initialLength = this.length;
-    let startIndex = start;
     let deleted = [];
     let tail = [];
+    let startIndex = start >= 0 ? start : start + initialLength;
+
+    startIndex = startIndex < 0 ? 0 : startIndex;
+    startIndex = startIndex > initialLength ? initialLength : startIndex;
 
     if (arguments.length === 0) {
       return deleted;
     }
 
-    if (startIndex === undefined) {
-      startIndex = 0;
-    }
-
-    if (startIndex < 0) {
-      if (-startIndex > initialLength) {
-        startIndex = 0;
-      } else {
-        startIndex += initialLength;
-      }
-    } else if (startIndex > initialLength) {
-      startIndex = initialLength;
-    }
-
-    if (!deleteCount && deleteCount !== 0) {
+    if (deleteCount === undefined) {
       for (let i = startIndex; i < initialLength; i++) {
         deleted[i - startIndex] = this[i];
       }
