@@ -20,7 +20,7 @@ function applyCustomSplice() {
       startIndex = this.length;
     }
 
-    const endIndex = deleteCount === this.length
+    const endIndex = deleteCount >= this.length
       ? this.length
       : startIndex + deleteCount;
 
