@@ -11,7 +11,7 @@ function applyCustomSplice() {
       return [];
     }
 
-    const fromIndex = -1 * start < this.length
+    const fromIndex = Math.abs(start) < this.length
       ? start + (start < 0 && this.length)
       : 0;
 
@@ -47,10 +47,10 @@ function applyCustomSplice() {
       }
     }
 
-    if (!items.length) {
-      this.length -= toIndex - fromIndex;
-    } else {
+    if (items.length) {
       this.length = toIndex;
+    } else {
+      this.length -= toIndex - fromIndex;
     }
 
     return deleted;
