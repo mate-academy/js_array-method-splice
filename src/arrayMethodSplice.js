@@ -24,12 +24,13 @@ function applyCustomSplice() {
       ? this.length
       : startIndex + deleteCount;
 
-    for (let i = startIndex; i < endIndex; i++) {
-      removedElements.push(this[i]);
+    const addedEndIndex = deleteCount === 1 ? 2 : 0;
 
-      if (deleteCount < this.length) {
-        this[i] = this[i + deleteCount];
+    for (let i = startIndex; i < endIndex + addedEndIndex; i++) {
+      if (i < endIndex) {
+        removedElements.push(this[i]);
       }
+      this[i] = this[i + deleteCount];
     }
     this.length -= removedElements.length;
 
