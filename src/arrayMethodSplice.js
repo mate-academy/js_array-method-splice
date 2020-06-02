@@ -15,10 +15,13 @@ function applyCustomSplice() {
       ? start + (start < 0 && this.length)
       : 0;
 
-    const indexToDelete = (deleteCount !== undefined
-      && deleteCount <= this.length)
-      ? fromIndex + deleteCount
+    let indexToDelete = deleteCount <= this.length
+      ? fromIndex + (deleteCount || 0)
       : this.length;
+
+    if (items.length && deleteCount === undefined) {
+      indexToDelete = fromIndex;
+    }
 
     const toIndex = items.length
       ? this.length + items.length - (indexToDelete - fromIndex)
