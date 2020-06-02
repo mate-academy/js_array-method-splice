@@ -44,7 +44,12 @@ function applyCustomSplice() {
       for (let i = innerStart; i < this.length - deleteCount; i++) {
         this[i] = this[i + deleteCount];
       }
-      this.length -= deleteCount;
+
+      if (deleteCount < this.length) {
+        this.length -= deleteCount;
+      } else {
+        this.length -= innerStart;
+      }
 
       if (items.length > 0) {
         for (let i = this.length - 1; i >= innerStart; i--) {
