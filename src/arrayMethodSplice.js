@@ -43,15 +43,12 @@ function applyCustomSplice() {
     if (items.length > 0) {
       this.length += items.length;
 
-      for (
-        let i = startIndex, itemIndex = 0;
-        itemIndex < items.length;
-        i++, itemIndex++
-      ) {
-        if (i + items.length < this.length) {
-          this[i + items.length] = this[i];
+      for (let i = this.length - 1; i >= startIndex; i--) {
+        if (i >= items.length + startIndex) {
+          this[i] = this[i - items.length];
+        } else {
+          this[i] = items[i - startIndex];
         }
-        this[i] = items[itemIndex];
       }
     }
 
