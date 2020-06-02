@@ -5,7 +5,7 @@
  */
 function applyCustomSplice() {
   [].__proto__.splice2 = function(
-    start = 0, deleteCount = this.length, ...items
+    start = 0, deleteCount, ...items
   ) {
     const removedElements = [];
     let startIndex = start;
@@ -20,19 +20,25 @@ function applyCustomSplice() {
       startIndex = this.length;
     }
 
-    const endIndex = deleteCount >= this.length
-      ? this.length
-      : startIndex + deleteCount;
+    let endIndex;
 
-    const addedEndIndex = deleteCount === 1 ? 2 : 0;
-
-    for (let i = startIndex; i < endIndex + addedEndIndex; i++) {
-      if (i < endIndex) {
-        removedElements.push(this[i]);
-      }
-      this[i] = this[i + deleteCount];
+    if (deleteCount < 0) {
+      return removedElements;
+    } else if (deleteCount >= this.length || deleteCount === undefined) {
+      endIndex = this.length;
+    } else {
+      endIndex = startIndex + deleteCount;
     }
-    this.length -= removedElements.length;
+
+    if (deleteCount !== undefined || arguments.length <= 1) {
+      for (let i = startIndex; i < this.length; i++) {
+        if (i < endIndex) {
+          removedElements.push(this[i]);
+        }
+        this[i] = this[i + deleteCount];
+      }
+      this.length -= removedElements.length;
+    }
 
     if (items.length > 0) {
       this.length += items.length;
