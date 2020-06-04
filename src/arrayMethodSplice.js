@@ -5,13 +5,14 @@
  */
 function applyCustomSplice() {
   [].__proto__.splice2 = function(
-    start = 0, deleteCount = this.length, ...items) {
+    start = 0, deleteCount, ...items) {
     if (arguments.length === 0) {
       return [];
     }
 
     const spliced = [];
     let startIndex = start;
+    let endIndex;
 
     if (startIndex < 0) {
       startIndex += this.length;
@@ -23,30 +24,35 @@ function applyCustomSplice() {
       startIndex = this.length;
     }
 
-    const endIndex = deleteCount >= this.length
-      ? this.length
-      : deleteCount + startIndex;
-
-    for (let i = startIndex; i < endIndex; i++) {
-      spliced.push(this[i]);
-
-      if (endIndex < this.length) {
-        this[i] = this[i + deleteCount];
-      }
+    if (deleteCount < 0) {
+      return spliced;
+    } else if (deleteCount >= this.length || deleteCount === undefined) {
+      endIndex = this.length;
+    } else {
+      endIndex = startIndex + deleteCount;
     }
 
-    this.length -= spliced.length;
+    if (deleteCount !== undefined || arguments.length <= 1) {
+      for (let i = startIndex; i < this.length; i++) {
+        if (i < endIndex) {
+          spliced.push(this[i]);
+        }
+
+        this[i] = this[i + deleteCount];
+      }
+
+      this.length -= spliced.length;
+    }
 
     if (items.length > 0) {
-      let itemsIndex = 0;
-
       this.length += items.length;
 
-      for (let i = startIndex; itemsIndex < items.length; i++) {
-        if (i + items.length < this.length) {
-          this[i + items.length] = this[i];
+      for (let i = this.length - 1; i >= startIndex; i--) {
+        if (i >= items.length + startIndex) {
+          this[i] = this[i - items.length];
+        } else {
+          this[i] = items[i - startIndex];
         }
-        this[i] = items[itemsIndex++];
       }
     }
 
