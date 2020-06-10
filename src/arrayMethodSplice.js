@@ -25,7 +25,7 @@ function applyCustomSplice() {
 
     if (!deleteCount && deleteCount !== 0) {
       numberToRemove = this.length - startIndex;
-    } else if (deleteCount >= this.length - startIndex) {
+    } else if (deleteCount > this.length - startIndex) {
       removed = [...this];
       this.length = 0;
     } else if (deleteCount <= 0) {
