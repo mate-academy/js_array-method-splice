@@ -38,7 +38,11 @@ function applyCustomSplice() {
       deleted[j] = this[i];
     }
 
-    for (let i = 0; i < startIndex; i++) {
+    for (let i = 0, j = startIndex + start; i < startIndex; i++, j--) {
+      if (start < 0 && delCount === Math.abs(start)) {
+        added.unshift(this[j]);
+        continue;
+      }
       added.unshift(this[i]);
     }
 
