@@ -10,6 +10,7 @@ function applyCustomSplice() {
     let startIndex = start || 0;
     let lastDeletedIndex = startIndex + delCount;
     const added = [...items];
+    const before = [];
     let deleted = [];
     const afterDeleted = [];
 
@@ -38,12 +39,8 @@ function applyCustomSplice() {
       deleted[j] = this[i];
     }
 
-    for (let i = 0, j = startIndex + start; i < startIndex; i++, j--) {
-      if (start < 0 && delCount === Math.abs(start)) {
-        added.unshift(this[j]);
-        continue;
-      }
-      added.unshift(this[i]);
+    for (let i = 0; i < startIndex; i++) {
+      before.push(this[i]);
     }
 
     if (deleteCount === 0) {
@@ -56,7 +53,7 @@ function applyCustomSplice() {
     }
 
     this.length = 0;
-    this.push(...added, ...afterDeleted);
+    this.push(...before, ...added, ...afterDeleted);
 
     return deleted;
   };
