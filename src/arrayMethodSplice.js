@@ -36,6 +36,9 @@ function applyCustomSplice() {
     }
 
     for (let i = startIndex, j = 0; j < delCount; i++, j++) {
+      if (this[i] === undefined) {
+        break;
+      }
       deleted[j] = this[i];
     }
 
