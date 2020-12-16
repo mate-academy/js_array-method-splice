@@ -12,31 +12,31 @@ function applyCustomSplice() {
     let actualStart = +start;
     let actualDelete = +deleteCount;
 
-    // check start value typeof
-    if (typeof actualStart !== 'number' || isNaN(actualStart)) {
+    // check start value typeof and length
+    if (typeof actualStart !== 'number'
+      || isNaN(actualStart)
+      || start * (-1) >= this.length) {
       actualStart = 0;
     }
 
-    if (typeof actualDelete !== 'number' || isNaN(actualStart)) {
+    if (actualStart > this.length) {
+      actualStart = this.length;
+    }
+
+    // check start value typeof and length
+    if (typeof actualDelete !== 'number'
+      || isNaN(actualDelete)
+      || actualDelete < 0) {
       actualDelete = 0;
+    }
+
+    if (actualDelete >= this.length) { // THIS CAN BE IMPROVED!!!
+      actualDelete = this.length;
     }
 
     for (let i = 2; i < items.length; i++) {
       newComers[newComers.length] = arguments[i];
     }
-
-    // check for unaccaptable parameters
-    if (arguments.length === 0 || start > this.length || actualDelete < 0) {
-      return [];
-    }
-
-    if (start * (-1) > this.length) {
-      this.length = 0;
-
-      return spliceArr;
-    }
-
-    // arguments length === 1
 
     if (arguments.length === 1) {
       if (actualStart < 0) {
@@ -96,23 +96,47 @@ function applyCustomSplice() {
     // arguments length > 2
 
     if (arguments.length > 2) {
-      this.length = actualStart;
+      if (actualStart < 0) {
+        this.length += actualStart;
 
-      for (let i = 0; i < items.length; i++) {
-        this[this.length] = items[i];
-      }
+        const indexToAdd = this.length + actualDelete;
 
-      if (actualDelete === 0) {
-        for (let i = actualStart; i < spliceArr.length; i++) {
+        for (let i = 0; i < items.length; i++) {
+          this[this.length] = items[i];
+        }
+
+        for (let i = indexToAdd; i < spliceArr.length; i++) {
           this[this.length] = spliceArr[i];
+        }
+
+        const resultAddIndex = spliceArr.length + actualStart;
+
+        for (let i = resultAddIndex; i < actualDelete + resultAddIndex; i++) {
+          if (spliceArr[i]) {
+            resultArr[resultArr.length] = spliceArr[i];
+          }
         }
       } else {
-        for (let i = actualDelete + 1; i < spliceArr.length; i++) {
+        // mutated array
+
+        this.length = actualStart;
+
+        for (let i = 0; i < items.length; i++) {
+          this[this.length] = items[i];
+        }
+
+        const startFromEnding = actualDelete + actualStart;
+
+        for (let i = startFromEnding; i < spliceArr.length; i++) {
           this[this.length] = spliceArr[i];
         }
 
-        for (let i = actualStart; i <= actualDelete; i++) {
-          resultArr[resultArr.length] = spliceArr[i];
+        // spliced array
+
+        for (let i = actualStart; i < actualStart + actualDelete; i++) {
+          if (spliceArr[i]) {
+            resultArr[resultArr.length] = spliceArr[i];
+          }
         }
       }
     }
