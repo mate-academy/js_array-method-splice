@@ -3,6 +3,7 @@
 /**
  * Implement method Splice
  */
+
 function applyCustomSplice() {
   [].__proto__.splice2 = function(start, deleteCount, ...items) {
     // first part: assignment of conditions
@@ -26,24 +27,19 @@ function applyCustomSplice() {
       } else {
         begin = 0;
       }
+    } else if (typeof start !== 'number' || isNaN(start)) {
+      begin = 0;
     }
 
     if (deleteCount > this.length - start || deleteCount === undefined) {
       countDelete = this.length - begin;
-    } else if (deleteCount < 0) {
+    } else if (deleteCount < 0 || typeof deleteCount !== 'number') {
       countDelete = 0;
     }
 
     // second part: splitting into 3 arrays
 
     for (let i = 0, j = 0; i < this.length; i++) {
-      if (begin === undefined) {
-        for (let g = 0; g < deleteCount; g++) {
-          removedElement[g] = this[g];
-        }
-        i = deleteCount;
-      }
-
       if (i === begin) {
         if (countDelete !== 0) {
           let k = begin;
@@ -73,20 +69,18 @@ function applyCustomSplice() {
     // third part: overwriting the original array
 
     const needLength = innerFirstArray.length + innerLastArray.length;
+    const promArray = [...innerFirstArray, ...innerLastArray];
+    const addPromArray = [...innerFirstArray, ...items, ...innerLastArray];
 
     this.length = 0;
 
     if (items.length === 0) {
-      const promArray = [...innerFirstArray, ...innerLastArray];
-
       for (let i = 0; i < needLength; i++) {
         this[i] = promArray[i];
       }
     } else {
-      const promArray = [...innerFirstArray, ...items, ...innerLastArray];
-
       for (let i = 0; i < needLength + items.length; i++) {
-        this[i] = promArray[i];
+        this[i] = addPromArray[i];
       }
     }
 
