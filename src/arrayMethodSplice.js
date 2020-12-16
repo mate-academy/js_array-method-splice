@@ -7,33 +7,33 @@
 function applyCustomSplice() {
   [].__proto__.splice2 = function(start, deleteCount, ...items) {
     // first part: assignment of conditions
-    let countDelete = deleteCount;
+    let countDelete = +deleteCount;
     let count = 0;
-    let begin = start;
+    let begin = +start;
     const removedElement = [];
     const innerFirstArray = [];
     const innerLastArray = [];
 
-    if (start === undefined && deleteCount === undefined
-      && items.length === 0) {
+    if (isNaN(begin) && isNaN(countDelete) && items.length === 0) {
       return [];
     }
 
-    if (start > this.length) {
+    if (begin > this.length) {
       begin = this.length;
-    } else if (start < 0) {
-      if (!(Math.abs(start) > this.length)) {
-        begin = this.length + start;
+    } else if (begin < 0) {
+      if (!(Math.abs(begin) > this.length)) {
+        begin = this.length + begin;
       } else {
         begin = 0;
+        countDelete = this.length;
       }
-    } else if (typeof start !== 'number' || isNaN(start)) {
+    } else if (isNaN(begin)) {
       begin = 0;
     }
 
-    if (deleteCount > this.length - start || deleteCount === undefined) {
+    if (countDelete > this.length - begin || isNaN(countDelete)) {
       countDelete = this.length - begin;
-    } else if (deleteCount < 0 || typeof deleteCount !== 'number') {
+    } else if (countDelete < 0) {
       countDelete = 0;
     }
 
