@@ -4,6 +4,61 @@ const applyCustomSplice = require('./arrayMethodSplice');
 
 applyCustomSplice();
 
+test('splice(NaN, 2)', () => {
+  const source = [0, 1, 2, 3, 4];
+  const result = source.splice2(NaN, 2);
+
+  expect(source)
+    .toEqual([2, 3, 4]);
+
+  expect(result)
+    .toEqual([0, 1]);
+});
+
+test('splice(null, 2, "a", "b", "c") first parametr', () => {
+  const source = [0, 1, 2, 3];
+  const result = source.splice2(null, 2, 'a', 'b', 'c');
+
+  expect(source)
+    .toEqual(['a', 'b', 'c', 2, 3]);
+
+  expect(result)
+    .toEqual([0, 1]);
+});
+
+test('splice(1, null, "a", "b", "c") second parametr', () => {
+  const source = [0, 1, 2, 3];
+  const result = source.splice2(1, null, 'a', 'b', 'c');
+
+  expect(source)
+    .toEqual([0, 'a', 'b', 'c', 1, 2, 3]);
+
+  expect(result)
+    .toEqual([]);
+});
+
+test('splice(-2) ', () => {
+  const source = [0, 1, 2, 3];
+  const result = source.splice2(-2);
+
+  expect(source)
+    .toEqual([0, 1]);
+
+  expect(result)
+    .toEqual([2, 3]);
+});
+
+test('splice(0, "a")', () => {
+  const source = [0, 1, 2, 3];
+  const result = source.splice2(0, 'a');
+
+  expect(source)
+    .toEqual([0, 1, 2, 3]);
+
+  expect(result)
+    .toEqual([]);
+});
+
 test('splice2 is added to [].__proto__', () => {
   expect([].splice2)
     .toBeInstanceOf(Function);

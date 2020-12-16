@@ -10,8 +10,8 @@ function applyCustomSplice() {
     let indexForResult = 0;
     let indexDeleteCount = deleteCount;
 
-    // Check for incoming start and deleteCount
-    if (start === undefined) {
+    // Check for initiati start and deleteCount
+    if (start === undefined || isNaN(start) || start === null) {
       indexStart = 0;
 
       if (deleteCount === undefined) {
@@ -67,15 +67,16 @@ function applyCustomSplice() {
 
       this.length = newArr.length - result.length + items.length;
       indexDeleteCount = deleteCount;
+      Number.isInteger(start) ? indexStart = start : indexStart = 0;
 
       for (let k = 0; k < this.length; k++) {
-        if (k < start) {
+        if (k < indexStart) {
           this[k] = newArr[indexForResult++];
-        } else if (k >= start && k < start + items.length) {
-          this[k] = items[k - start];
+        } else if (k >= indexStart && k < indexStart + items.length) {
+          this[k] = items[k - indexStart];
           indexForResult++;
         } else {
-          this[k] = newArr[1 + indexDeleteCount++];
+          this[k] = newArr[indexStart + indexDeleteCount++];
         }
       }
     }
