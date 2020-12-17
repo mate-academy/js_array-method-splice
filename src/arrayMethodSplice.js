@@ -12,26 +12,39 @@ function applyCustomSplice() {
     let actualStart = +start;
     let actualDelete = +deleteCount;
 
-    // check start value typeof and length
+    // check start value typeof
     if (typeof actualStart !== 'number'
       || isNaN(actualStart)
       || start * (-1) >= this.length) {
       actualStart = 0;
     }
 
-    if (actualStart > this.length) {
-      actualStart = this.length;
-    }
-
-    // check start value typeof and length
     if (typeof actualDelete !== 'number'
       || isNaN(actualDelete)
       || actualDelete < 0) {
       actualDelete = 0;
     }
 
-    if (actualDelete >= this.length) { // THIS CAN BE IMPROVED!!!
-      actualDelete = this.length;
+    // new conditions
+
+    // testing for ==>  arr.length === 8;  start === -3; end === 10;
+    if (actualStart < 0) {
+      if (actualDelete > actualStart * (-1)) {
+        actualDelete = actualStart * (-1);
+      }
+    }
+
+    // testing for ==>  arr.length === 8;  start === 3; end === 10;
+    if (actualStart > 0) {
+      if (actualDelete > this.length - actualStart) {
+        actualDelete = this.length - actualStart;
+      }
+    }
+
+    // end of new conditions
+
+    if (actualStart > this.length) {
+      actualStart = this.length;
     }
 
     for (let i = 2; i < items.length; i++) {
@@ -112,13 +125,10 @@ function applyCustomSplice() {
         const resultAddIndex = spliceArr.length + actualStart;
 
         for (let i = resultAddIndex; i < actualDelete + resultAddIndex; i++) {
-          if (spliceArr[i]) {
-            resultArr[resultArr.length] = spliceArr[i];
-          }
+          resultArr[resultArr.length] = spliceArr[i];
         }
       } else {
         // mutated array
-
         this.length = actualStart;
 
         for (let i = 0; i < items.length; i++) {
@@ -134,9 +144,7 @@ function applyCustomSplice() {
         // spliced array
 
         for (let i = actualStart; i < actualStart + actualDelete; i++) {
-          if (spliceArr[i]) {
-            resultArr[resultArr.length] = spliceArr[i];
-          }
+          resultArr[resultArr.length] = spliceArr[i];
         }
       }
     }
