@@ -5,8 +5,11 @@
  */
 
 function applyCustomSplice() {
-  [].__proto__.splice2 = function(start, deleteCount, ...items) {
-    // first part: assignment of conditions
+  [].__proto__.splice2 = function(
+    start,
+    deleteCount = this.length - +start,
+    ...items
+  ) {
     let countDelete = +deleteCount;
     let count = 0;
     let begin = +start;
@@ -31,9 +34,9 @@ function applyCustomSplice() {
       begin = 0;
     }
 
-    if (countDelete > this.length - begin || isNaN(countDelete)) {
+    if (countDelete > this.length - begin) {
       countDelete = this.length - begin;
-    } else if (countDelete < 0) {
+    } else if (countDelete < 0 || isNaN(countDelete)) {
       countDelete = 0;
     }
 
