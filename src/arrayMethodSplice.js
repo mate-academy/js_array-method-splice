@@ -66,17 +66,18 @@ function applyCustomSplice() {
       const newArr = this.slice();
 
       this.length = newArr.length - result.length + items.length;
-      indexDeleteCount = deleteCount;
-      Number.isInteger(start) ? indexStart = start : indexStart = 0;
+      deleteCount > 0 ? indexDeleteCount = deleteCount : indexDeleteCount = 0;
 
       for (let k = 0; k < this.length; k++) {
         if (k < indexStart) {
-          this[k] = newArr[indexForResult++];
+          this[k] = newArr[indexForResult];
+          indexForResult++;
         } else if (k >= indexStart && k < indexStart + items.length) {
           this[k] = items[k - indexStart];
           indexForResult++;
         } else {
-          this[k] = newArr[indexStart + indexDeleteCount++];
+          this[k] = newArr[indexStart + indexDeleteCount];
+          indexDeleteCount++;
         }
       }
     }
