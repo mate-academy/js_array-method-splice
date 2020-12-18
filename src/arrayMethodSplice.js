@@ -28,7 +28,8 @@ function applyCustomSplice() {
         && deleteCount > 0
         && realStart + deleteCount <= length) {
       end = realStart + deleteCount;
-    } else if (deleteCount === undefined) {
+    } else if (deleteCount === undefined
+      || realStart + deleteCount > length) {
       end = length;
     } else {
       end = realStart;
@@ -60,5 +61,7 @@ function applyCustomSplice() {
     return result;
   };
 }
+
+applyCustomSplice();
 
 module.exports = applyCustomSplice;
