@@ -62,6 +62,4 @@ function applyCustomSplice() {
   };
 }
 
-applyCustomSplice();
-
 module.exports = applyCustomSplice;
