@@ -125,6 +125,17 @@ test('splice(-2, -2, "a")', () => {
     .toEqual([]);
 });
 
+test('splice("2", 0, "f", "g")', () => {
+  const source = [0, 1, 2, 3, 4];
+  const result = source.splice2('2', 0, 'f', 'g');
+
+  expect(source)
+    .toEqual([0, 1, 'f', 'g', 2, 3, 4]);
+
+  expect(result)
+    .toEqual([]);
+});
+
 test('splice(-1, -1, [1,2,3])', () => {
   const source = [0, 1, 2, 3, 4];
   const result = source.splice2(-1, -1, [1, 2, 3]);

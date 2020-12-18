@@ -6,7 +6,7 @@
 function applyCustomSplice() {
   [].__proto__.splice2 = function(start, deleteCount, ...items) {
     const result = [];
-    let indexStart = start;
+    let indexStart = parseInt(start);
     let indexForResult = 0;
     let indexDeleteCount = deleteCount;
 
