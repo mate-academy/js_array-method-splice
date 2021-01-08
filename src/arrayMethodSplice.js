@@ -11,48 +11,23 @@ function applyCustomSplice() {
     let endIndex = deleteCount;
 
     /*
-    line 17-53 - slice method:
+    line 17-27 - slice method:
     */
 
-    function sliceArr(startArr = 0, endArr) {
-      let startIndexArr = startArr || 0;
-      let endIndexArr = endArr || lengthArr;
-
-      if (endArr === 0) {
-        endIndexArr = 0;
-      }
-
-      if (startIndexArr < 0 && (startIndexArr * -1) < lengthArr) {
-        startIndexArr = lengthArr + startIndexArr;
-      }
-
-      if ((startIndexArr * -1) > lengthArr) {
-        startIndexArr = 0;
-      }
-
-      if (startIndexArr > lengthArr) {
-        return [];
-      }
-
-      if (endIndexArr < 0) {
-        endIndexArr = lengthArr + endIndexArr;
-      }
-
-      if (endIndexArr > lengthArr) {
-        endIndexArr = lengthArr;
-      }
-
+    function sliceArr(startArr = 0, endArr = lengthArr) {
       const result = [];
 
-      for (let i = startIndexArr; i < endIndexArr; i++) {
-        result[i - startIndexArr] = arrCopy[i];
+      for (let i = startArr; i < endArr; i++) {
+        if (i < arrCopy.length) {
+          result[i - startArr] = arrCopy[i];
+        }
       }
 
       return result;
     };
 
     /*
-    line 62-88 - check condition for splice method:
+    line 33-67 - check condition for splice method:
     */
 
     if ((startIndex === undefined && endIndex === undefined)
@@ -81,6 +56,10 @@ function applyCustomSplice() {
       endIndex = lengthArr;
     }
 
+    if (startIndex < 0 && (startIndex * -1) < lengthArr) {
+      startIndex = lengthArr + startIndex;
+    }
+
     if (startIndex < 0 && (startIndex * -1) > lengthArr
       && endIndex === undefined) {
       startIndex = 0;
@@ -93,8 +72,7 @@ function applyCustomSplice() {
     const removedElements = sliceArr(startIndex, startIndex + endIndex);
 
     /*
-    line 96-117 - concat method:
-    const joinedParts = firstPart.concat([...items], secondPart);
+    line 79-95 - concat method:
     */
 
     function concatArray(firstPartCopy, ...values) {
