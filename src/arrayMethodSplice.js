@@ -66,6 +66,11 @@ function applyCustomSplice() {
       endIndex = lengthArr;
     }
 
+    if (startIndex === 0 && endIndex === undefined) {
+      startIndex = 0;
+      endIndex = lengthArr;
+    }
+
     const firstPart = sliceArr(0, startIndex);
     const secondPart = sliceArr(startIndex + endIndex);
 
