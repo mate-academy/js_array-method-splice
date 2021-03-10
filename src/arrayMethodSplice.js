@@ -11,9 +11,12 @@ function applyCustomSplice() {
     const lastPart = [];
     let countItems = 0;
 
-    if ((start === undefined && deleteCount === undefined)
-      || deleteCountChanged < 0) {
+    if (start === undefined && deleteCount === undefined) {
       return removedItems;
+    }
+
+    if (deleteCountChanged < 0) {
+      deleteCountChanged = 0;
     }
 
     if (idxStart === undefined) {
