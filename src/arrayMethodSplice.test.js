@@ -80,6 +80,17 @@ test('splice(-3, 2)', () => {
     .toEqual([1, 2]);
 });
 
+test('splice(3, 2, \'321\'', () => {
+  const source = [1, 2, 3, 4, undefined, 'hello', null, NaN, '', false];
+  const result = source.splice2(3, 2, '321');
+
+  expect(source)
+    .toEqual([1, 2, 3, '321', 'hello', null, NaN, '', false]);
+
+  expect(result)
+    .toEqual([ 4, undefined ]);
+});
+
 test('splice(100)', () => {
   const source = [0, 1, 2, 3];
   const result = source.splice2(100);
