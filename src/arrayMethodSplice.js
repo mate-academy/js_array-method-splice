@@ -40,20 +40,25 @@ function applyCustomSplice() {
         deleted[i - startPos] = this[i];
       }
 
-      for (let i = startPos + deleteAmount, j = startPos + itemsLength;
-        i < length;
-        i++, j++) {
-        this[j] = this[i];
+      const diff = deleteAmount - itemsLength;
+
+      if (diff > 0) {
+        for (let i = startPos + deleteAmount; i < length; i++) {
+          this[i - diff] = this[i];
+        }
+        this.length -= diff;
+      } else if (diff < 0) {
+        this.length -= diff;
+
+        for (let i = length - 1; i >= startPos + deleteAmount; i--) {
+          this[i - diff] = this[i];
+        }
       }
 
       for (let i = 0; i < itemsLength; i++) {
         this[startPos + i] = items[i];
       }
-
-      this.length = length + itemsLength;
     }
-
-    this.length -= deleteAmount;
 
     return deleted;
   };
