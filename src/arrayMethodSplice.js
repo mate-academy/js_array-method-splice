@@ -20,13 +20,7 @@
 function applyCustomSplice() {
   // CONCAT method:
   [].__proto__.concat2 = function(array) {
-    const concated = [...this];
-
-    for (const n of array) {
-      concated[concated.length] = n;
-    }
-
-    return concated;
+    return [...this, ...array];
   };
 
   // SPLICE method:
