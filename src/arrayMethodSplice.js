@@ -34,8 +34,12 @@ function applyCustomSplice() {
       deletedAmount = this.length - startIndex;
     }
 
-    if (deleteCount > (this.length - start)) {
-      deletedAmount = this.length - start;
+    if (deleteCount > (this.length - startIndex)) {
+      deletedAmount = this.length - startIndex;
+    }
+
+    if (deletedAmount + startIndex > this.length) {
+      deletedAmount = this.length - startIndex;
     }
 
     if (deleteCount < 0) {
