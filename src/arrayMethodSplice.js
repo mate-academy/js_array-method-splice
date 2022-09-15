@@ -9,7 +9,7 @@
  * ESlint rule "Array prototype is read only".
  * So what is about the "no-proto" rule? =))
  * |
- * Secondary, since I didnt implemented the .concat() method before
+ * Secondary, since I didnt implement the .concat() method before
  * I did my personal .concat2() to be clear with it :)
  * |
  * Also, I tried to wrote a documentation for each step
@@ -20,11 +20,7 @@
 function applyCustomSplice() {
   // CONCAT method:
   [].__proto__.concat2 = function(array) {
-    const concated = [];
-
-    for (const n of this) {
-      concated[concated.length] = n;
-    }
+    const concated = [...this];
 
     for (const n of array) {
       concated[concated.length] = n;
@@ -62,7 +58,7 @@ function applyCustomSplice() {
 
     // - Here is the main <=podkapotniy=> BlAcK MaGiC of mutation
     // |-- in the native array to delete some values
-    // |-- and add a new if needed)
+    // |-- and add a new if needed ;)
     const mutation = this
       .slice(0, start)
       .concat2(newItems)
