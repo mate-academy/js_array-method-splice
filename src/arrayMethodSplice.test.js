@@ -167,3 +167,92 @@ test('deleteCount < 0', () => {
   expect(result)
     .toEqual([]);
 });
+
+// --------------Custom tests---------------
+test('custom test < 0', () => {
+  const source = [0, 1, 2, 3];
+  const result = source.splice2(1, NaN, 'a');
+
+  expect(source)
+    .toEqual([0, 'a', 1, 2, 3]);
+
+  expect(result)
+    .toEqual([]);
+});
+
+test('custom test < 0', () => {
+  const source = [0, 1, 2, 3];
+  const result = source.splice2(1, NaN, NaN);
+
+  expect(source)
+    .toEqual([0, NaN, 1, 2, 3]);
+
+  expect(result)
+    .toEqual([]);
+});
+
+test('custom test < 0', () => {
+  const source = [0, 1, 2, 3];
+  const result = source.splice2(NaN, NaN, NaN);
+
+  expect(source)
+    .toEqual([NaN, 0, 1, 2, 3]);
+
+  expect(result)
+    .toEqual([]);
+});
+
+test('custom test < 0', () => {
+  const source = [0, 1, 2, 3];
+  const result = source.splice2(-2, 1, 3);
+
+  expect(source)
+    .toEqual([0, 1, 3, 3]);
+
+  expect(result)
+    .toEqual([2]);
+});
+
+test('custom test < 0', () => {
+  const source = [0, 1, 2, 3];
+  const result = source.splice2(-900, 1, 3);
+
+  expect(source)
+    .toEqual([3, 1, 2, 3]);
+
+  expect(result)
+    .toEqual([0]);
+});
+
+test('custom test < 0', () => {
+  const source = [0, 1, 2, 3];
+  const result = source.splice2(-900, -1, 3);
+
+  expect(source)
+    .toEqual([3, 0, 1, 2, 3]);
+
+  expect(result)
+    .toEqual([]);
+});
+
+test('custom test < 0', () => {
+  const source = [0, 1, 2, 3];
+  const result = source.splice2(-1, -1, 3);
+
+  expect(source)
+    .toEqual([0, 1, 2, 3, 3]);
+
+  expect(result)
+    .toEqual([]);
+});
+
+test('custom test < 0', () => {
+  const source = [0, 1, 2, 3];
+  const result = source.splice2(2, 2, 3);
+
+  expect(source)
+    .toEqual([0, 1, 3]);
+
+  expect(result)
+    .toEqual([2, 3]);
+});
