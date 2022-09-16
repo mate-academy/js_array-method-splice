@@ -167,3 +167,14 @@ test('deleteCount < 0', () => {
   expect(result)
     .toEqual([]);
 });
+
+test('NaN as a first parameter', () => {
+  const source = [0, 1, 2, 3];
+  const result = source.splice2(NaN, 1, 'a');
+
+  expect(source)
+    .toEqual(['a', 1, 2, 3]);
+
+  expect(result)
+    .toEqual([0]);
+});

@@ -15,10 +15,10 @@ function applyCustomSplice() {
       Math.abs(start) > thisLength
         ? spliceStart = 0
         : spliceStart = thisLength + spliceStart;
-    }
-
-    if (!start && !deleteCount && items.length === 0) {
+    } else if (!start && !deleteCount && items.length === 0) {
       return newArray;
+    } else if (isNaN(start) || (spliceStart === undefined && deleteCount)) {
+      spliceStart = 0;
     }
 
     if (spliceStart > thisLength) {
@@ -31,7 +31,7 @@ function applyCustomSplice() {
       return newArray;
     }
 
-    if (spliceStart >= 0 || (spliceStart === undefined && deleteCount > 0)) {
+    if (spliceStart >= 0) {
       if (deleteCount === undefined) {
         for (let i = spliceStart, j = 0; i < thisLength; i++, j++) {
           newArray[j] = this[i];
@@ -68,10 +68,6 @@ function applyCustomSplice() {
       }
 
       if (deleteCount > 0) {
-        if (spliceStart === undefined) {
-          spliceStart = 0;
-        }
-
         let endOfSplice;
 
         if ((deleteCount + spliceStart) < thisLength) {
@@ -85,15 +81,13 @@ function applyCustomSplice() {
             newArray[j] = this[i];
           } else {
             endArray[k] = this[i];
+            k++;
           }
         }
 
         for (let i = 0, j = spliceStart; i < itemsLength; i++, j++) {
           this[j] = items[i];
-
-          if (i === itemsLength - 1) {
-            thisLength = j + 1;
-          }
+          thisLength = j + 1;
         }
 
         if (itemsLength === 0) {
@@ -103,10 +97,7 @@ function applyCustomSplice() {
 
         for (let i = 0, j = thisLength; i < endArray.length; i++, j++) {
           this[j] = endArray[i];
-
-          if (i === endArray.length - 1) {
-            this.length = j + 1;
-          }
+          this.length = j + 1;
         }
 
         if (newArray.length > deleteCount) {
