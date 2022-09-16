@@ -69,7 +69,9 @@ function applyCustomSplice() {
 
     // - New vars to not assign a function params
     // /-- + some base checks to validate the params.
-    const deleteCount = (!howMany || howMany < 0)
+    const deleteCount = (!howMany
+      || howMany < 0
+      || typeof howMany === 'string')
       ? 0
       : howMany;
     let start = (fromIndex < 0)
@@ -77,7 +79,10 @@ function applyCustomSplice() {
       : fromIndex || 0;
 
     // One more check for the start value if it's still negative.
-    start = start < 0 ? 0 : start;
+    // Or if its a string passed as an index value.
+    if (start < 0 || typeof start === 'string') {
+      start = 0;
+    }
 
     // - <spliced> is the base result of .splice2() method,
     // |-- basically its an array of deleted values
