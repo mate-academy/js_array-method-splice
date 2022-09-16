@@ -9,7 +9,7 @@ function applyCustomSplice() {
     deleteCount,
     ...items
   ) {
-    if (Array.from(arguments).length === 0) {
+    if (arguments.length === 0) {
       return [];
     }
 
