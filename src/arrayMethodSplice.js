@@ -14,7 +14,7 @@ function applyCustomSplice() {
     if (start < 0) {
       Math.abs(start) > thisLength
         ? spliceStart = 0
-        : spliceStart = thisLength + spliceStart;
+        : spliceStart += thisLength;
     } else if (!start && !deleteCount && items.length === 0) {
       return newArray;
     } else if (isNaN(start) || (spliceStart === undefined && deleteCount)) {
