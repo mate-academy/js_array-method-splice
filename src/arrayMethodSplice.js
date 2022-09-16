@@ -74,7 +74,7 @@ function applyCustomSplice() {
       : howMany;
     let start = (fromIndex < 0)
       ? this.length + fromIndex
-      : fromIndex;
+      : fromIndex || 0;
 
     // One more check for the start value if it's still negative.
     start = start < 0 ? 0 : start;
