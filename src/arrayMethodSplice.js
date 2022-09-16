@@ -11,13 +11,15 @@ function applyCustomSplice() {
     const endArray = [];
     let spliceStart = start;
 
-    if (start < 0) {
-      Math.abs(start) > thisLength
+    if (spliceStart < 0) {
+      Math.abs(spliceStart) > thisLength
         ? spliceStart = 0
         : spliceStart += thisLength;
-    } else if (!start && !deleteCount && items.length === 0) {
+    } else if (!spliceStart && !deleteCount && items.length === 0) {
       return newArray;
-    } else if (isNaN(start) || (spliceStart === undefined && deleteCount)) {
+    }
+
+    if (isNaN(spliceStart) || (spliceStart === undefined && deleteCount)) {
       spliceStart = 0;
     }
 
