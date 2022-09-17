@@ -14,15 +14,17 @@ function applyCustomSplice() {
     start = start < 0 || start === undefined ? 0 : start;
     start = start === null ? 0 : start;
 
-    if ((len === 0 && items.length === 0)
-      || delCount < 0
-      || (begin === undefined && delCount === undefined)
-    ) {
-      return deleted;
-    }
-
     if (delCount + start > len || delCount === undefined) {
       delCount = len - start;
+    }
+
+    if ((len === 0 && items.length === 0)
+      || delCount < 0
+      || (deleteCount === undefined && begin === undefined)
+      || delCount === null
+      || isNaN(delCount)
+    ) {
+      return deleted;
     }
 
     for (let i = start; i < start + delCount; i++) {
