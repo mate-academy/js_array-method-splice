@@ -20,7 +20,7 @@ function applyCustomSplice() {
 
     if ((len === 0 && items.length === 0)
       || delCount < 0
-      || (deleteCount === undefined && begin === undefined)
+      || (arguments.length === 0)
       || delCount === null
       || isNaN(delCount)
     ) {
