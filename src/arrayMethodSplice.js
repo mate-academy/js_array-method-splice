@@ -5,18 +5,20 @@
  */
 function applyCustomSplice() {
   [].__proto__.splice2 = function (
-    start = 0,
+    start,
     deleteCount,
     ...items
   ) {
-    if (arguments.length === 0) {
+    if (
+      arguments.length === 0
+      || (start === undefined && deleteCount === undefined)
+    ) {
       return [];
     }
 
     const startPos = normalize(start, this.length, false);
     let deleteAmount = deleteCount;
 
-    // For splice2(1, NaN, NaN) case
     if (isNaN(deleteAmount)) {
       deleteAmount = 0;
     }
@@ -45,7 +47,6 @@ function applyCustomSplice() {
     return removedItems;
   };
 
-  // Fix endIndex normalize!
   [].__proto__.slice2 = function (start = 0, end = this.length) {
     const slicedArr = [];
 
