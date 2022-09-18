@@ -9,14 +9,12 @@ function applyCustomSplice() {
     deleteCount,
     ...items
   ) {
-    if (
-      arguments.length === 0
-      || (start === undefined && deleteCount === undefined)
-    ) {
+    if (arguments.length === 0) {
       return [];
     }
 
-    const startPos = normalize(start, this.length, false);
+    let startPos = normalize(start, this.length, false);
+
     let deleteAmount = deleteCount;
 
     if (isNaN(deleteAmount)) {
@@ -25,6 +23,11 @@ function applyCustomSplice() {
 
     if (deleteCount === undefined) {
       deleteAmount = this.length - startPos;
+    }
+
+    if (start === undefined && deleteCount === undefined) {
+      deleteAmount = 0;
+      startPos = this.length;
     }
 
     deleteAmount = deleteAmount < 0 ? 0 : deleteAmount;

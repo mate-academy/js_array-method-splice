@@ -260,11 +260,11 @@ test('custom test < 0', () => {
 test('custom test < 0', () => {
   const source = ['1', 1, 2, 3, null, undefined,
     false, [1, 2, 3, 4], NaN, {}, 'asd'];
-  const result = source.splice2(undefined, undefined);
+  const result = source.splice2(undefined, undefined, 5, 6);
 
   expect(source)
     .toEqual(['1', 1, 2, 3, null, undefined,
-      false, [1, 2, 3, 4], NaN, {}, 'asd']);
+      false, [1, 2, 3, 4], NaN, {}, 'asd', 5, 6]);
 
   expect(result)
     .toEqual([]);
