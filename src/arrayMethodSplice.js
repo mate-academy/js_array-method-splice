@@ -15,8 +15,8 @@ function applyCustomSplice() {
       eraisedElements.push(this[i + startIndex]);
     }
 
-    for (let i = 0; i < amount; i++) {
-      this[i + startIndex] = this[i + startIndex + eraisedElements.length];
+    for (let i = startIndex; i < this.length; i++) {
+      this[i] = this[i + eraisedElements.length];
     }
 
     this.length -= eraisedElements.length;
@@ -34,7 +34,7 @@ function applyCustomSplice() {
 }
 
 function normalizeStart(index, length) {
-  if (index === undefined) {
+  if (!index) {
     return 0;
   }
 
@@ -58,11 +58,11 @@ function normalizeStart(index, length) {
 function normalizeAmount(deleteCount, start, startIndex, length) {
   let amount = deleteCount;
 
-  if (deleteCount === undefined && start === undefined) {
+  if (!isFinite(deleteCount) && !isFinite(start)) {
     return 0;
   }
 
-  if (deleteCount === undefined) {
+  if (!isFinite(deleteCount)) {
     amount = length - startIndex;
   }
 
