@@ -10,17 +10,22 @@ function applyCustomSplice() {
     const newArray = [];
     const endArray = [];
     let spliceStart = start;
+    let spliceDelCount = deleteCount;
 
     if (spliceStart < 0) {
       Math.abs(spliceStart) > thisLength
         ? spliceStart = 0
         : spliceStart += thisLength;
-    } else if (!spliceStart && !deleteCount && items.length === 0) {
+    } else if (!spliceStart && !spliceDelCount && items.length === 0) {
       return newArray;
     }
 
-    if (isNaN(spliceStart) || (spliceStart === undefined && deleteCount)) {
+    if (isNaN(spliceStart) || (spliceStart === undefined && spliceDelCount)) {
       spliceStart = 0;
+    }
+
+    if (arguments.length === 3 && spliceDelCount === undefined) {
+      spliceDelCount = 0;
     }
 
     if (spliceStart > thisLength) {
@@ -34,7 +39,7 @@ function applyCustomSplice() {
     }
 
     if (spliceStart >= 0) {
-      if (deleteCount === undefined) {
+      if (spliceDelCount === undefined) {
         for (let i = spliceStart, j = 0; i < thisLength; i++, j++) {
           newArray[j] = this[i];
         }
@@ -43,7 +48,7 @@ function applyCustomSplice() {
         return newArray;
       }
 
-      if (deleteCount <= 0) {
+      if (spliceDelCount <= 0) {
         for (let i = spliceStart, j = 0; i < thisLength; i++, j++) {
           newArray[j] = this[i];
         }
@@ -69,11 +74,11 @@ function applyCustomSplice() {
         return newArray;
       }
 
-      if (deleteCount > 0) {
+      if (spliceDelCount > 0) {
         let endOfSplice;
 
-        if ((deleteCount + spliceStart) < thisLength) {
-          endOfSplice = deleteCount + spliceStart;
+        if ((spliceDelCount + spliceStart) < thisLength) {
+          endOfSplice = spliceDelCount + spliceStart;
         } else {
           endOfSplice = thisLength;
         }
@@ -102,8 +107,8 @@ function applyCustomSplice() {
           this.length = j + 1;
         }
 
-        if (newArray.length > deleteCount) {
-          newArray.length = deleteCount;
+        if (newArray.length > spliceDelCount) {
+          newArray.length = spliceDelCount;
         }
 
         return newArray;

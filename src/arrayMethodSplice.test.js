@@ -178,3 +178,14 @@ test('NaN as a first parameter', () => {
   expect(result)
     .toEqual([0]);
 });
+
+test('all is undefined', () => {
+  const source = [0, 1, 2, 3];
+  const result = source.splice2(undefined, undefined, undefined);
+
+  expect(source)
+    .toEqual([undefined, 0, 1, 2, 3]);
+
+  expect(result)
+    .toEqual([]);
+});
