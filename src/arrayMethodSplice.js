@@ -58,7 +58,7 @@ function normalizeStart(index, length) {
 function normalizeAmount(deleteCount, start, startIndex, length) {
   let amount = deleteCount;
 
-  if (!isFinite(deleteCount) && !isFinite(start)) {
+  if (!isFinite(deleteCount) && (!isFinite(start) || start === null)) {
     return 0;
   }
 
