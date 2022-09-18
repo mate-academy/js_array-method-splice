@@ -60,8 +60,20 @@ function applyCustomSplice() {
 
   // SPLICE method:
   [].__proto__.splice2 = function(
-    fromIndex = 0, howMany = this.length, ...newItems
+    fromIndex = 0,
+    howMany,
+    ...newItems
   ) {
+    /* eslint-disable */
+    if (typeof howMany === 'undefined'
+      && arguments.length > 1) {
+      howMany = 0;
+    } else if (!howMany
+      && arguments.length < 2) {
+      howMany = this.length;
+    }
+
+    /* eslint-enable */
     // Base check if splice called without an arguments.
     if (arguments.length === 0) {
       return [];
@@ -71,7 +83,8 @@ function applyCustomSplice() {
     // /-- + some base checks to validate the params.
     const deleteCount = (!howMany
       || howMany < 0
-      || typeof howMany === 'string')
+      || typeof howMany === 'string'
+      || typeof howMany === 'undefined')
       ? 0
       : howMany;
     let start = (fromIndex < 0)
