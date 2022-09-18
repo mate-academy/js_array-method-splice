@@ -5,6 +5,10 @@
  */
 function applyCustomSplice() {
   [].__proto__.splice2 = function(start = 0, deleteCount, ...items) {
+    if (start === 0 && !deleteCount && items.length === 0) {
+      return [];
+    }
+
     const arrayBeforeSplice = [];
     const arrayAfterSplice = [];
     const deletedItems = [];
