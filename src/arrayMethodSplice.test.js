@@ -263,8 +263,34 @@ test('custom test < 0', () => {
   const result = source.splice2(undefined, undefined, 5, 6);
 
   expect(source)
-    .toEqual(['1', 1, 2, 3, null, undefined,
-      false, [1, 2, 3, 4], NaN, {}, 'asd', 5, 6]);
+    .toEqual([5, 6, '1', 1, 2, 3, null, undefined,
+      false, [1, 2, 3, 4], NaN, {}, 'asd']);
+
+  expect(result)
+    .toEqual([]);
+});
+
+test('custom test < 0', () => {
+  const source = ['1', 1, 2, 3, null, undefined,
+    false, [1, 2, 3, 4], NaN, {}, 'asd'];
+  const result = source.splice2(undefined, -1, 5, 6);
+
+  expect(source)
+    .toEqual([5, 6, '1', 1, 2, 3, null, undefined,
+      false, [1, 2, 3, 4], NaN, {}, 'asd']);
+
+  expect(result)
+    .toEqual([]);
+});
+
+test('custom test < 0', () => {
+  const source = ['1', 1, 2, 3, null, undefined,
+    false, [1, 2, 3, 4], NaN, {}, 'asd'];
+  const result = source.splice2(undefined, undefined, undefined);
+
+  expect(source)
+    .toEqual([undefined, '1', 1, 2, 3, null, undefined,
+      false, [1, 2, 3, 4], NaN, {}, 'asd']);
 
   expect(result)
     .toEqual([]);

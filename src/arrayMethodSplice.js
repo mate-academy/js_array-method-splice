@@ -27,10 +27,12 @@ function applyCustomSplice() {
 
     if (start === undefined && deleteCount === undefined) {
       deleteAmount = 0;
-      startPos = this.length;
+      startPos = 0;
     }
 
-    deleteAmount = deleteAmount < 0 ? 0 : deleteAmount;
+    deleteAmount = deleteAmount < 0
+      ? 0
+      : deleteAmount;
 
     if (startPos === 0 && deleteAmount < 0) {
       deleteAmount = this.length;
@@ -73,14 +75,18 @@ const normalize = (index, length, sliceFlag = true) => {
 
   const indexFromLastElement = length + validIndex;
 
-  let normalized = validIndex < 0 ? indexFromLastElement : validIndex;
+  let normalized = validIndex < 0
+    ? indexFromLastElement
+    : validIndex;
 
   if (normalized < 0) {
     normalized = 0;
   }
 
   if (normalized > length) {
-    normalized = sliceFlag ? length - 1 : length;
+    normalized = sliceFlag
+      ? length - 1
+      : length;
   }
 
   return normalized;
