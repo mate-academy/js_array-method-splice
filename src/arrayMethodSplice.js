@@ -4,8 +4,8 @@
  * Implement method Splice
  */
 function applyCustomSplice() {
-  [].__proto__.splice2 = function(start = 0, deleteCount, ...items) {
-    if (arguments.length === 0) {
+  [].__proto__.splice2 = function(start = 0, deleteCount = 0, ...items) {
+    if (!start && !deleteCount && !items.length) {
       return [];
     }
 
@@ -43,17 +43,17 @@ function applyCustomSplice() {
       arrbefore[arrbefore.length] = this[i];
     }
 
-    if (!deleteCount && !items.length) {
+    if (!countOfDelete) {
       for (let i = from; i < this.length; i++) {
         arrRemoved[arrRemoved.length] = this[i];
       }
     }
 
-    if (deleteCount === 0) {
+    if (!countOfDelete && items.length) {
       arrRemoved = [];
     }
 
-    if ((countOfDelete > 0 && start < this.length) || !items.length) {
+    if (countOfDelete) {
       for (let i = from; i < from + countOfDelete; i++) {
         arrRemoved[arrRemoved.length] = this[i];
       }
@@ -63,8 +63,16 @@ function applyCustomSplice() {
       arrAfter = [...items];
     }
 
-    for (let i = from + countOfDelete; i < this.length; i++) {
-      arrAfter[arrAfter.length] = this[i];
+    if (countOfDelete) {
+      for (let i = from + countOfDelete; i < this.length; i++) {
+        arrAfter[arrAfter.length] = this[i];
+      }
+    }
+
+    if (!countOfDelete && items.length) {
+      for (let i = from; i < this.length; i++) {
+        arrAfter[arrAfter.length] = this[i];
+      }
     }
 
     this.length = arrbefore.length + arrAfter.length;
