@@ -21,6 +21,7 @@ function applyCustomSplice() {
     if ((len === 0 && items.length === 0)
       || delCount < 0
       || (arguments.length === 0)
+      || (begin === undefined && deleteCount === undefined)
       || delCount === null
       || isNaN(delCount)
     ) {
