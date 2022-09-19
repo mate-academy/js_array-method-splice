@@ -7,8 +7,8 @@ function applyCustomSplice() {
   [].__proto__.splice2 = function(start, deleteCount, ...items) {
     const removedValues = [];
     let startIndex = start;
-    let howManyDelete = deleteCount;
-    let addItems = items;
+    const howManyDelete = deleteCount;
+    const addItems = items;
 
     // setting the start point
     if (startIndex > this.length) {
@@ -23,14 +23,32 @@ function applyCustomSplice() {
       startIndex += this.length;
     }
 
-    if (start === undefined && deleteCount === undefined) {
-      howManyDelete = 0;
-      startIndex = this.length;
-    }
-
     // case if splice without arguments or deleteCount < 0
     if (arguments.length === 0 || howManyDelete < 0) {
       return [];
+    }
+
+    if (start === undefined && deleteCount === undefined && !addItems.length) {
+      return [];
+    }
+
+    if (start === undefined
+      && deleteCount === undefined
+      && addItems[0] === undefined) {
+      const reserved = [];
+
+      for (let i = 0; i < this.length; i++) {
+        reserved[i] = this[i];
+      }
+
+      this[0] = addItems[0];
+      this.length++;
+
+      for (let i = 1; i < this.length; i++) {
+        this[i] = reserved[i - 1];
+      }
+
+      return removedValues;
     }
 
     // case, when func receiving start index and adding elements
