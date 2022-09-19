@@ -28,10 +28,12 @@ function applyCustomSplice() {
       return [];
     }
 
+    // case if first two arguments === undefined
     if (start === undefined && deleteCount === undefined && !addItems.length) {
       return [];
     }
 
+    // case if all three arguments === undefined
     if (start === undefined
       && deleteCount === undefined
       && addItems[0] === undefined) {
