@@ -3,34 +3,37 @@
 /**
  * Implement method Splice
  */
+function setStartingPoint(start, array) {
+  if (start > array.length) {
+    return array.length;
+  }
+
+  if (start === undefined || start < (array.length * -1)) {
+    return 0;
+  }
+
+  if (start < 0) {
+    return start + array.length;
+  }
+
+  return start;
+}
+
 function applyCustomSplice() {
   [].__proto__.splice2 = function(start, deleteCount, ...items) {
     const removedValues = [];
-    let startIndex = start;
+    const startIndex = setStartingPoint(start, this);
     const howManyDelete = deleteCount;
     const addItems = items;
 
-    // setting the start point
-    if (startIndex > this.length) {
-      startIndex = this.length;
-    }
-
-    // if first parameter is undefined
-    // or a negative index greater than the length of the array
-    if (startIndex === undefined || startIndex < (this.length * -1)) {
-      startIndex = 0;
-    } else if (startIndex < 0) {
-      startIndex += this.length;
-    }
-
     // case if splice without arguments or deleteCount < 0
     if (arguments.length === 0 || howManyDelete < 0) {
-      return [];
+      return removedValues;
     }
 
     // case if first two arguments === undefined
     if (start === undefined && deleteCount === undefined && !addItems.length) {
-      return [];
+      return removedValues;
     }
 
     // case if all three arguments === undefined
@@ -63,7 +66,7 @@ function applyCustomSplice() {
         this[i + startIndex] = addItems[i];
       }
 
-      return [];
+      return removedValues;
     }
 
     // case if only start point received
@@ -79,115 +82,52 @@ function applyCustomSplice() {
       return removedValues;
     }
 
-    // case if nothing needs to add:
-    // 1) taking deleted values
-    if (addItems.length === 0) {
-      for (let i = 0; i < howManyDelete; i++) {
-        removedValues[i] = this[startIndex + i];
-      }
-
-      const afterArr = [];
-      let v = 0;
-
-      // 2) saving values after deleted ones
-      for (let i = startIndex + howManyDelete; i < this.length; i++) {
-        afterArr[v] = this[i];
-        v++;
-      }
-
-      // 3) putting 'after' values instead deleted ones
-      for (let i = startIndex; i < this.length; i++) {
-        this[i] = afterArr[i - startIndex];
-      }
-
-      this.length -= removedValues.length;
-
-      return removedValues;
-    }
-
-    // case if we need to add more elements than delete:
-    // 1) taking deleted values
-    if (addItems.length > howManyDelete) {
-      for (let i = 0; i < howManyDelete; i++) {
-        removedValues[i] = this[startIndex + i];
-      }
-
-      const afterArr = [];
-      let v = 0;
-
-      // 2) saving values after deleted ones
-      for (let i = startIndex + howManyDelete; i < this.length; i++) {
-        afterArr[v] = this[i];
-        v++;
-      }
-
-      // 3) adding extra length for more elements
-      this.length += addItems.length - howManyDelete;
-
-      // 4) adding new values
-      for (let i = startIndex; i < startIndex + addItems.length; i++) {
-        this[i] = addItems[i - startIndex];
-      }
-
-      // 5) putting back 'after' values
-      for (let i = startIndex + addItems.length; i < this.length; i++) {
-        this[i] = afterArr[i - (startIndex + addItems.length)];
-      }
-
-      return removedValues;
-    }
-
-    // case if we need to remove as much as add:
-    if (addItems.length === howManyDelete) {
-      for (let i = 0; i < howManyDelete; i++) {
-        removedValues[i] = this[startIndex + i];
-      }
-
-      const afterArr = [];
-      let v = 0;
-
-      for (let i = startIndex + howManyDelete; i < this.length; i++) {
-        afterArr[v] = this[i];
-        v++;
-      }
-
-      for (let i = startIndex; i < startIndex + addItems.length; i++) {
-        this[i] = addItems[i - startIndex];
-      }
-
-      for (let i = startIndex + addItems.length; i < this.length; i++) {
-        this[i] = afterArr[i - (startIndex + addItems.length)];
-      }
-
-      return removedValues;
-    }
-
-    // case if need to delete more than add
-    if (addItems.length < howManyDelete) {
-      for (let i = 0; i < howManyDelete; i++) {
-        removedValues[i] = this[startIndex + i];
-      }
-
-      const afterArr = [];
-      let v = 0;
-
-      for (let i = startIndex + howManyDelete; i < this.length; i++) {
-        afterArr[v] = this[i];
-        v++;
-      }
-      this.length -= howManyDelete - addItems.length;
-
-      for (let i = startIndex; i < startIndex + addItems.length; i++) {
-        this[i] = addItems[i - startIndex];
-      }
-
-      for (let i = startIndex + addItems.length; i < this.length; i++) {
-        this[i] = afterArr[i - (startIndex + addItems.length)];
-      }
-
-      return removedValues;
-    }
+    return replaceElems(
+      removedValues, startIndex, howManyDelete, addItems, this
+    );
   };
+}
+
+function replaceElems(deleted, startIndex, howManyDelete, addItems, array) {
+  for (let i = 0; i < howManyDelete; i++) {
+    deleted[i] = array[startIndex + i];
+  }
+
+  const afterArr = [];
+  let v = 0;
+
+  for (let i = startIndex + howManyDelete; i < array.length; i++) {
+    afterArr[v] = array[i];
+    v++;
+  }
+
+  if (addItems.length === 0) {
+    for (let i = startIndex; i < array.length; i++) {
+      array[i] = afterArr[i - startIndex];
+    }
+
+    array.length -= deleted.length;
+
+    return deleted;
+  }
+
+  if (addItems.length > howManyDelete) {
+    array.length += addItems.length - howManyDelete;
+  }
+
+  if (addItems.length < howManyDelete) {
+    array.length -= howManyDelete - addItems.length;
+  }
+
+  for (let i = startIndex; i < startIndex + addItems.length; i++) {
+    array[i] = addItems[i - startIndex];
+  }
+
+  for (let i = startIndex + addItems.length; i < array.length; i++) {
+    array[i] = afterArr[i - (startIndex + addItems.length)];
+  }
+
+  return deleted;
 }
 
 module.exports = applyCustomSplice;
