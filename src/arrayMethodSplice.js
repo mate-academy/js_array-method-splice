@@ -45,7 +45,15 @@ function applyCustomSplice() {
 
     this.length = startIndex;
 
-    this.push(...items, ...elAfterSpliced);
+    [].__proto__.push2 = function(...forPushed) {
+      for (let i = 0; i < forPushed.length; i++) {
+        this[this.length] = forPushed[i];
+      }
+
+      return this;
+    };
+
+    this.push2(...items, ...elAfterSpliced);
 
     return splisedEl;
   };
