@@ -23,7 +23,13 @@ function applyCustomSplice() {
       startIndex = this.length;
     }
 
-    if (toDeleteCount > this.length - startIndex) {
+    if (toDeleteCount < 0) {
+      toDeleteCount = 0;
+    }
+
+    if (arguments.length === 1
+      || toDeleteCount > this.length - startIndex
+    ) {
       toDeleteCount = this.length - startIndex;
     }
 
