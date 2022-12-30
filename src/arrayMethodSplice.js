@@ -3,7 +3,6 @@
 /**
  * Implement method Splice
  */
-
 function applyCustomSplice() {
   [].__proto__.splice2 = function(start, deleteCount, ...items) {
     const removedElements = [];
@@ -49,8 +48,8 @@ function applyCustomSplice() {
       this.length = 0;
     }
 
-    if (items.length > 0 && remainedElements.length > 0) {
-      for (let i = 0; i < remainedElements.length; i++) {
+    for (let i = 0; i < remainedElements.length; i++) {
+      if (items.length > 0 && remainedElements.length > 0) {
         if (i === actualStart) {
           for (let j = 0; j < items.length; j++) {
             this[this.length] = items[j];
@@ -58,11 +57,13 @@ function applyCustomSplice() {
         }
         this[this.length] = remainedElements[i];
       }
-    } else if (items.length === 0 && remainedElements.length > 0) {
-      for (let i = 0; i < remainedElements.length; i++) {
+
+      if (items.length === 0 && remainedElements.length > 0) {
         this[i] = remainedElements[i];
       }
-    } else {
+    }
+
+    if (items.length > 0 && remainedElements.length === 0) {
       for (let i = 0; i < items.length; i++) {
         this[this.length] = items[i];
       }
