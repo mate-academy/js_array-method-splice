@@ -50,16 +50,17 @@ function applyCustomSplice() {
     /* copy items to result array before delete */
     for (let i = startIndex; i < lastIndex; i++) {
       const indexForResult = i - startIndex;
+      const rightItemIndex = i + quantityToRemove;
 
       removedItems[indexForResult] = this[i];
 
-      /* if I will have non-deleted elements on the right,
-       I moving them to the starting position */
-      if (i + quantityToRemove < this.length) {
-        this[i] = this[i + quantityToRemove];
+      /* if i will have non-deleted items on the right,
+       i copy them to the starting position */
+      if (rightItemIndex < this.length) {
+        this[i] = this[rightItemIndex];
       }
     }
-    /* delete */
+    /* cut length */
     this.length -= quantityToRemove;
 
     /* if there are no items to add. Return deleted items */
