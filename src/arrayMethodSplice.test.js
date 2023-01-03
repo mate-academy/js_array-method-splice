@@ -167,3 +167,14 @@ test('deleteCount < 0', () => {
   expect(result)
     .toEqual([]);
 });
+
+test('deleteCount < 0', () => {
+  const source = [0, 1, 2, 3];
+  const result = source.splice2(1, -1);
+
+  expect(source)
+    .toEqual([0, 1, 2, 3]);
+
+  expect(result)
+    .toEqual([]);
+});
