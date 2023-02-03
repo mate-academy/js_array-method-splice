@@ -167,3 +167,31 @@ test('deleteCount < 0', () => {
   expect(result)
     .toEqual([]);
 });
+
+test('undefined, undefined, 99', () => {
+  const source = [0, 1, 2, 3];
+  const result = source.splice(undefined, undefined, 99);
+
+  const source2 = [0, 1, 2, 3];
+  const result2 = source2.splice2(undefined, undefined, 99);
+
+  expect(source)
+    .toEqual(source2);
+
+  expect(result)
+    .toEqual(result2);
+});
+
+test('start > array.length', () => {
+  const source = [0, 1, 2, 3];
+  const result = source.splice(10, 0, 99);
+
+  const source2 = [0, 1, 2, 3];
+  const result2 = source2.splice2(10, 0, 99);
+
+  expect(source)
+    .toEqual(source2);
+
+  expect(result)
+    .toEqual(result2);
+});

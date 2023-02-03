@@ -6,38 +6,38 @@
 function applyCustomSplice() {
   [].__proto__.splice2 = function(
     startIndex,
-    deleteCount,
+    deleteCount = startIndex > 0 ? (this.length - startIndex) : -startIndex,
     ...items
   ) {
     // write code here
-    const deleted = [];
-
-    if (startIndex === undefined && deleteCount === undefined) {
-      return deleted;
-    }
-
-    if (deleteCount < 0) {
-      return deleted;
-    }
-
+    let deleted = [];
     let start = startIndex || 0;
+    const toDeleteCount = deleteCount || 0;
 
     if (start < 0) {
       start += this.length;
     }
 
     if (start < 0) {
-      deleted.push(...this);
+      deleted = [...this];
 
       this.length = 0;
 
       return deleted;
     }
 
-    const end = start + deleteCount || this.length;
+    if (start > this.length) {
+      for (let i = 0; i < items.length; i++) {
+        this[this.length] = items[i];
+      }
+
+      return deleted;
+    }
+
+    const end = start + toDeleteCount;
 
     for (let i = start; i < end; i++) {
-      deleted.push(this[start]);
+      deleted = [...deleted, this[start]];
 
       for (let j = start; j < this.length; j++) {
         this[j] = this[j + 1];
